@@ -118,3 +118,11 @@ function caree(cote){
         return null
     }
 }
+
+function aire (cote){
+    if(cote && typeof(cote) == "number"){
+        return cote*4
+    }else{
+        return null
+    }
+}
