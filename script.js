@@ -101,6 +101,13 @@ dire_merci()
 tab_multi()*/
 
 function perimetre(longueur, largeur){
+    if(!longueur || typeof(longueur) !== "number") {
+        longueur = parseFloat(prompt("Entrez la longueur :"));
+    }
+    
+    if(!largeur || typeof(largeur) !== "number") {
+        largeur = parseFloat(prompt("Entrez la largeur :"));
+    }
     if(typeof(longueur) === "number" && typeof(largeur) === "number"){
         var resultat = 2 * (longueur +largeur)
     console.log("le périmètre est égal à "+resultat);
