@@ -19,9 +19,29 @@ var section = document.querySelector("section")/ querySelectorAll("section")*/
 //innerHTML pour manipuler l'élément, textContent pour récupérer le contenu textuel d'un élément
 
 //Style pour modifier les propriétés CSS du doc
-var article = document.querySelectorAll('.article') [0]
+// var article = document.querySelectorAll('.article') [0]
 /*article.style.backgroundColor = "black"
 article.style.color = "pink"*/
+
+/* addEvenListener = réalise l'abonnement d'une fonction à un 
+évènement donné "objet.addEvenListerner(eventype, listenerFunction)" */
+// Attendre que le DOM soit chargé
+/*document.addEventListener('DOMContentLoaded', () => {
+    var h2 = document.querySelector('section#html h2');
+    
+    var listenerFunction = () => {
+        window.alert("Click détecté sur la balise H2")
+        // le desabonnement "removeEventListener"
+        h2.removeEventListener('click', listenerFunction);
+    }
+    
+    h2.addEventListener('click', listenerFunction);
+});*/
+
+window.onload = () =>{
+    setupListeners();
+}
+
 
 
 
