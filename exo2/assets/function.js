@@ -1,7 +1,15 @@
 //Object contenant les functions listeners
 var listenerFunction = {
-    h2Click: () =>{
-        window.alert("Click détecté sur la balise H2")
+    h2Click: function(event){
+        /*console.log(this);
+        this.style.color = "green"*/
+        var element = event.target;
+        if(element && element.style.color == "green"){
+            element.style.color = "blue"
+        }else{
+            element.style.color = "green"
+        }
+        console.log("Click détecté sur la balise H2")
     }
 }
 //Mise en place des abonnements
