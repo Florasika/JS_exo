@@ -1,0 +1,154 @@
+/* Reset de base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.container {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    max-width: 400px;
+    width: 100%;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+    font-size: 28px;
+}
+
+/* Zone de recherche */
+.search-box {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+#city-input {
+    flex: 1;
+    padding: 12px 15px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    font-size: 16px;
+    outline: none;
+    transition: border 0.3s;
+}
+
+#city-input:focus {
+    border-color: #667eea;
+}
+
+#search-btn {
+    padding: 12px 20px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+#search-btn:hover {
+    background: #5568d3;
+}
+
+/* Informations météo */
+.weather-info {
+    text-align: center;
+    animation: fadeIn 0.5s;
+}
+
+#city-name {
+    color: #333;
+    font-size: 32px;
+    margin-bottom: 15px;
+}
+
+.temperature {
+    font-size: 60px;
+    font-weight: bold;
+    color: #667eea;
+    margin: 20px 0;
+}
+
+.description {
+    font-size: 24px;
+    color: #666;
+    margin-bottom: 30px;
+    text-transform: capitalize;
+}
+
+.details {
+    display: flex;
+    justify-content: space-around;
+    padding-top: 20px;
+    border-top: 2px solid #eee;
+}
+
+.detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.label {
+    font-size: 14px;
+    color: #999;
+}
+
+/* Message d'erreur */
+.error {
+    background: #ff6b6b;
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    margin-bottom: 20px;
+    animation: shake 0.5s;
+}
+
+/* Loader */
+.loader {
+    text-align: center;
+    color: #667eea;
+    font-size: 18px;
+    padding: 20px;
+}
+
+/* Classe pour cacher les éléments */
+.hidden {
+    display: none;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+}

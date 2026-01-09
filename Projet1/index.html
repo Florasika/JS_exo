@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application Météo</title>
+    <link rel="stylesheet" href="/Projet1/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🌤️ Météo App</h1>
+        
+        <!-- Zone de recherche -->
+        <div class="search-box">
+            <input type="text" id="city-input" placeholder="Entrez une ville...">
+            <button id="search-btn">Rechercher</button>
+        </div>
+        
+        <!-- Message d'erreur -->
+        <div id="error-message" class="error hidden">
+            Ville introuvable. Réessayez.
+        </div>
+        
+        <!-- Zone d'affichage de la météo -->
+        <div id="weather-display" class="weather-info hidden">
+            <h2 id="city-name">Paris</h2>
+            <div class="temperature">
+                <span id="temp">25</span>°C
+            </div>
+            <div class="description" id="description">Ensoleillé</div>
+            
+            <div class="details">
+                <div class="detail-item">
+                    <span class="label">💧 Humidité:</span>
+                    <span id="humidity">60%</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">💨 Vent:</span>
+                    <span id="wind">15 km/h</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Loader pendant le chargement -->
+        <div id="loader" class="loader hidden">
+            Chargement...
+        </div>
+    </div>
+    
+    <script src="/Projet1/main.js"></script>
+</body>
+</html>
