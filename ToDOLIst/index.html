@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ma To-Do List Intelligente</title>
+    <link rel="stylesheet" href="/ToDOLIst/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>📝 Ma To-Do List</h1>
+        
+        <!-- Formulaire d'ajout de tâche -->
+        <div class="input-container">
+            <input 
+                type="text" 
+                id="task-input" 
+                placeholder="Ajouter une nouvelle tâche..."
+                autocomplete="off"
+            >
+            <button id="add-btn">Ajouter</button>
+        </div>
+
+        <!-- Filtres -->
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all">Toutes</button>
+            <button class="filter-btn" data-filter="active">Actives</button>
+            <button class="filter-btn" data-filter="completed">Terminées</button>
+        </div>
+
+        <!-- Statistiques -->
+        <div class="stats">
+            <span id="total-tasks">0 tâche(s)</span>
+            <span id="completed-tasks">0 terminée(s)</span>
+        </div>
+
+        <!-- Liste des tâches -->
+        <ul id="task-list" class="task-list">
+            <!-- Les tâches seront ajoutées ici dynamiquement -->
+        </ul>
+
+        <!-- Message quand la liste est vide -->
+        <div id="empty-message" class="empty-message">
+            Aucune tâche pour le moment. Ajoutez-en une ! 🎉
+        </div>
+
+        <!-- Bouton pour tout supprimer -->
+        <button id="clear-all" class="clear-all-btn">Supprimer toutes les tâches</button>
+    </div>
+
+    <script src="/ToDOLIst/main.js"></script>
+</body>
+</html>
