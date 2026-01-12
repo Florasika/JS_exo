@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeu du Nombre Mystère</title>
+    <link rel="stylesheet" href="/JeuMystere/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- En-tête du jeu -->
+        <header class="game-header">
+            <h1>🎲 Le Nombre Mystère</h1>
+            <p class="subtitle">Devinez le nombre entre <span id="min-range">1</span> et <span id="max-range">100</span></p>
+        </header>
+
+        <!-- Sélection de difficulté -->
+        <div class="difficulty-selector" id="difficulty-selector">
+            <h2>Choisissez la difficulté</h2>
+            <div class="difficulty-buttons">
+                <button class="difficulty-btn" data-difficulty="easy">
+                    <span class="emoji">😊</span>
+                    <span class="label">Facile</span>
+                    <span class="range">1-50</span>
+                </button>
+                <button class="difficulty-btn active" data-difficulty="medium">
+                    <span class="emoji">😐</span>
+                    <span class="label">Moyen</span>
+                    <span class="range">1-100</span>
+                </button>
+                <button class="difficulty-btn" data-difficulty="hard">
+                    <span class="emoji">😰</span>
+                    <span class="label">Difficile</span>
+                    <span class="range">1-500</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Zone de jeu principale -->
+        <div class="game-area">
+            <!-- Statistiques -->
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-label">Tentatives</span>
+                    <span class="stat-value" id="attempts">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Meilleur score</span>
+                    <span class="stat-value" id="best-score">-</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Victoires</span>
+                    <span class="stat-value" id="wins">0</span>
+                </div>
+            </div>
+
+            <!-- Zone de feedback -->
+            <div class="feedback-zone">
+                <div id="feedback" class="feedback">
+                    🎯 Entrez votre premier nombre !
+                </div>
+                <div id="temperature" class="temperature"></div>
+            </div>
+
+            <!-- Zone d'input -->
+            <div class="input-zone">
+                <input 
+                    type="number" 
+                    id="guess-input" 
+                    placeholder="Votre nombre..."
+                    min="1"
+                    autocomplete="off"
+                >
+                <button id="guess-btn" class="btn-primary">Deviner</button>
+            </div>
+
+            <!-- Boutons d'action -->
+            <div class="action-buttons">
+                <button id="new-game-btn" class="btn-secondary">🔄 Nouvelle partie</button>
+                <button id="hint-btn" class="btn-hint">💡 Indice (<span id="hints-left">3</span>)</button>
+            </div>
+
+            <!-- Historique des tentatives -->
+            <div class="history-section">
+                <h3>Historique des tentatives</h3>
+                <div id="attempts-list" class="attempts-list">
+                    <!-- Les tentatives seront ajoutées ici -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal de victoire -->
+        <div id="victory-modal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-emoji">🎉</div>
+                <h2>Félicitations !</h2>
+                <p id="victory-message">Vous avez trouvé le nombre mystère !</p>
+                <div class="victory-stats">
+                    <div class="victory-stat">
+                        <span class="victory-label">Nombre trouvé:</span>
+                        <span class="victory-value" id="victory-number">42</span>
+                    </div>
+                    <div class="victory-stat">
+                        <span class="victory-label">En:</span>
+                        <span class="victory-value" id="victory-attempts">5 tentatives</span>
+                    </div>
+                </div>
+                <button id="play-again-btn" class="btn-primary">Rejouer</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/JeuMystere/script.js"></script>
+</body>
+</html>
