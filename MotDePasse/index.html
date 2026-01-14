@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Générateur de Mot de Passe Sécurisé</title>
+    <link rel="stylesheet" href="/MotDePasse/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- En-tête -->
+        <header class="header">
+            <h1>🔐 Générateur de Mot de Passe</h1>
+            <p class="subtitle">Créez des mots de passe sécurisés en un clic</p>
+        </header>
+
+        <!-- Zone d'affichage du mot de passe -->
+        <div class="password-display">
+            <input 
+                type="text" 
+                id="password-output" 
+                class="password-output" 
+                value="Cliquez sur générer"
+                readonly
+            >
+            <button id="copy-btn" class="copy-btn" title="Copier">
+                <span class="copy-icon">📋</span>
+            </button>
+        </div>
+
+        <!-- Indicateur de force -->
+        <div class="strength-indicator">
+            <div class="strength-bar">
+                <div id="strength-fill" class="strength-fill"></div>
+            </div>
+            <span id="strength-text" class="strength-text">-</span>
+        </div>
+
+        <!-- Options de personnalisation -->
+        <div class="options-container">
+            <h2>Options de personnalisation</h2>
+
+            <!-- Longueur du mot de passe -->
+            <div class="option-group">
+                <div class="option-header">
+                    <label for="length-slider">Longueur du mot de passe</label>
+                    <span id="length-value" class="length-value">16</span>
+                </div>
+                <input 
+                    type="range" 
+                    id="length-slider" 
+                    min="4" 
+                    max="64" 
+                    value="16"
+                    class="slider"
+                >
+            </div>
+
+            <!-- Options de caractères -->
+            <div class="option-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="include-uppercase" checked>
+                    <span class="checkbox-text">
+                        Majuscules (A-Z)
+                        <span class="example">Ex: ABCDEFGH</span>
+                    </span>
+                </label>
+            </div>
+
+            <div class="option-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="include-lowercase" checked>
+                    <span class="checkbox-text">
+                        Minuscules (a-z)
+                        <span class="example">Ex: abcdefgh</span>
+                    </span>
+                </label>
+            </div>
+
+            <div class="option-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="include-numbers" checked>
+                    <span class="checkbox-text">
+                        Chiffres (0-9)
+                        <span class="example">Ex: 0123456789</span>
+                    </span>
+                </label>
+            </div>
+
+            <div class="option-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="include-symbols" checked>
+                    <span class="checkbox-text">
+                        Symboles
+                        <span class="example">Ex: !@#$%^&*</span>
+                    </span>
+                </label>
+            </div>
+
+            <!-- Options avancées -->
+            <div class="advanced-options">
+                <h3>Options avancées</h3>
+                
+                <div class="option-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="exclude-ambiguous">
+                        <span class="checkbox-text">
+                            Exclure les caractères ambigus
+                            <span class="example">Ex: i, l, 1, L, o, 0, O</span>
+                        </span>
+                    </label>
+                </div>
+
+                <div class="option-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="no-repeat">
+                        <span class="checkbox-text">
+                            Pas de caractères répétés
+                            <span class="example">Chaque caractère unique</span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bouton de génération -->
+        <button id="generate-btn" class="generate-btn">
+            ⚡ Générer un mot de passe
+        </button>
+
+        <!-- Conseils de sécurité -->
+        <div class="security-tips">
+            <h3>💡 Conseils de sécurité</h3>
+            <ul>
+                <li>Utilisez au moins 12 caractères pour plus de sécurité</li>
+                <li>Mélangez majuscules, minuscules, chiffres et symboles</li>
+                <li>Ne réutilisez jamais le même mot de passe</li>
+                <li>Changez vos mots de passe régulièrement</li>
+                <li>Utilisez un gestionnaire de mots de passe</li>
+            </ul>
+        </div>
+
+        <!-- Historique des mots de passe -->
+        <div class="history-section">
+            <div class="history-header">
+                <h3>📜 Historique récent</h3>
+                <button id="clear-history-btn" class="clear-btn">Effacer</button>
+            </div>
+            <div id="history-list" class="history-list">
+                <!-- L'historique sera ajouté ici -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast notification -->
+    <div id="toast" class="toast hidden">
+        Mot de passe copié ! ✓
+    </div>
+
+    <script src="/MotDePasse/script.js"></script>
+</body>
+</html>
