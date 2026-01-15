@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Interactif Chronométré</title>
+    <link rel="stylesheet" href="/Quiz/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Écran d'accueil -->
+        <div id="welcome-screen" class="screen active">
+            <div class="welcome-content">
+                <h1>🧠 Quiz Interactif</h1>
+                <p class="subtitle">Testez vos connaissances en culture générale</p>
+                
+                <!-- Sélection de difficulté -->
+                <div class="difficulty-section">
+                    <h2>Choisissez votre difficulté</h2>
+                    <div class="difficulty-buttons">
+                        <button class="difficulty-btn active" data-difficulty="easy">
+                            <span class="emoji">😊</span>
+                            <span class="label">Facile</span>
+                            <span class="info">10 questions • 30s/question</span>
+                        </button>
+                        <button class="difficulty-btn" data-difficulty="medium">
+                            <span class="emoji">😐</span>
+                            <span class="label">Moyen</span>
+                            <span class="info">15 questions • 20s/question</span>
+                        </button>
+                        <button class="difficulty-btn" data-difficulty="hard">
+                            <span class="emoji">😰</span>
+                            <span class="label">Difficile</span>
+                            <span class="info">20 questions • 15s/question</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Catégories -->
+                <div class="category-section">
+                    <h2>Catégorie</h2>
+                    <select id="category-select" class="category-select">
+                        <option value="all">Toutes les catégories</option>
+                        <option value="science">Sciences</option>
+                        <option value="history">Histoire</option>
+                        <option value="geography">Géographie</option>
+                        <option value="culture">Culture générale</option>
+                    </select>
+                </div>
+
+                <button id="start-btn" class="start-btn">🚀 Commencer le Quiz</button>
+
+                <!-- Meilleurs scores -->
+                <div class="best-scores">
+                    <h3>🏆 Meilleurs Scores</h3>
+                    <div id="best-scores-list" class="scores-list"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Écran de quiz -->
+        <div id="quiz-screen" class="screen">
+            <!-- En-tête avec stats -->
+            <div class="quiz-header">
+                <div class="stat">
+                    <span class="stat-label">Question</span>
+                    <span id="current-question" class="stat-value">1</span>
+                    <span class="stat-total">/ <span id="total-questions">10</span></span>
+                </div>
+                <div class="timer-container">
+                    <div class="timer-circle">
+                        <svg class="timer-svg" width="80" height="80">
+                            <circle class="timer-bg" cx="40" cy="40" r="35"></circle>
+                            <circle id="timer-progress" class="timer-progress" cx="40" cy="40" r="35"></circle>
+                        </svg>
+                        <span id="timer-text" class="timer-text">30</span>
+                    </div>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Score</span>
+                    <span id="current-score" class="stat-value">0</span>
+                </div>
+            </div>
+
+            <!-- Barre de progression -->
+            <div class="progress-bar">
+                <div id="progress-fill" class="progress-fill"></div>
+            </div>
+
+            <!-- Zone de question -->
+            <div class="question-container">
+                <div class="category-badge" id="question-category">Sciences</div>
+                <h2 id="question-text" class="question-text">Quelle est la capitale de la France ?</h2>
+                
+                <!-- Options de réponse -->
+                <div id="answers-container" class="answers-container">
+                    <!-- Les réponses seront ajoutées dynamiquement -->
+                </div>
+            </div>
+
+            <!-- Feedback -->
+            <div id="feedback" class="feedback hidden">
+                <span id="feedback-icon" class="feedback-icon">✓</span>
+                <span id="feedback-text" class="feedback-text">Bonne réponse !</span>
+            </div>
+        </div>
+
+        <!-- Écran de résultats -->
+        <div id="results-screen" class="screen">
+            <div class="results-content">
+                <div id="results-emoji" class="results-emoji">🎉</div>
+                <h1 id="results-title">Félicitations !</h1>
+                <div class="final-score">
+                    <span class="score-label">Score Final</span>
+                    <span id="final-score" class="score-value">8/10</span>
+                    <span id="final-percentage" class="score-percentage">80%</span>
+                </div>
+
+                <!-- Statistiques détaillées -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">✓</div>
+                        <div class="stat-number" id="correct-count">8</div>
+                        <div class="stat-label">Correctes</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">✗</div>
+                        <div class="stat-number" id="incorrect-count">2</div>
+                        <div class="stat-label">Incorrectes</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">⏱️</div>
+                        <div class="stat-number" id="avg-time">12s</div>
+                        <div class="stat-label">Temps moyen</div>
+                    </div>
+                </div>
+
+                <!-- Révision des réponses -->
+                <div class="review-section">
+                    <h3>📋 Révision des réponses</h3>
+                    <div id="review-list" class="review-list">
+                        <!-- Les réponses seront ajoutées ici -->
+                    </div>
+                </div>
+
+                <!-- Boutons d'action -->
+                <div class="results-actions">
+                    <button id="retry-btn" class="btn-primary">🔄 Recommencer</button>
+                    <button id="home-btn" class="btn-secondary">🏠 Accueil</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/Quiz/script.js"></script>
+</body>
+</html>
