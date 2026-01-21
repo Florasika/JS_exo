@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestionnaire de Budget Personnel</title>
+    <link rel="stylesheet" href="/Gestionnaire/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- En-tête -->
+        <header class="header">
+            <div class="header-content">
+                <h1>💰 Mon Budget</h1>
+                <div class="header-actions">
+                    <button id="export-btn" class="btn-secondary">📥 Exporter</button>
+                    <button id="reset-btn" class="btn-danger">🗑️ Réinitialiser</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard - Statistiques -->
+        <section class="dashboard">
+            <div class="stats-grid">
+                <div class="stat-card revenue">
+                    <div class="stat-icon">📈</div>
+                    <div class="stat-content">
+                        <span class="stat-label">Revenus</span>
+                        <span id="total-revenue" class="stat-value">0,00 €</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card expense">
+                    <div class="stat-icon">📉</div>
+                    <div class="stat-content">
+                        <span class="stat-label">Dépenses</span>
+                        <span id="total-expense" class="stat-value">0,00 €</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card balance">
+                    <div class="stat-icon">💵</div>
+                    <div class="stat-content">
+                        <span class="stat-label">Solde</span>
+                        <span id="balance" class="stat-value">0,00 €</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Graphique -->
+            <div class="chart-section">
+                <h2>Répartition des dépenses</h2>
+                <canvas id="expense-chart" width="400" height="400"></canvas>
+                <div id="chart-legend" class="chart-legend"></div>
+            </div>
+        </section>
+
+        <!-- Formulaire d'ajout de transaction -->
+        <section class="form-section">
+            <h2>
+                <span id="form-title">Ajouter une transaction</span>
+                <button id="cancel-edit" class="btn-text hidden">Annuler</button>
+            </h2>
+            <form id="transaction-form" class="transaction-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="transaction-type">Type</label>
+                        <select id="transaction-type" required>
+                            <option value="expense">Dépense</option>
+                            <option value="revenue">Revenu</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="transaction-amount">Montant (€)</label>
+                        <input 
+                            type="number" 
+                            id="transaction-amount" 
+                            step="0.01" 
+                            min="0.01"
+                            placeholder="0.00"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="transaction-category">Catégorie</label>
+                        <select id="transaction-category" required>
+                            <!-- Rempli dynamiquement -->
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="transaction-date">Date</label>
+                        <input type="date" id="transaction-date" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="transaction-description">Description</label>
+                    <input 
+                        type="text" 
+                        id="transaction-description" 
+                        placeholder="Description de la transaction"
+                        required
+                    >
+                </div>
+
+                <button type="submit" class="btn-primary" id="submit-btn">
+                    ➕ Ajouter la transaction
+                </button>
+            </form>
+        </section>
+
+        <!-- Filtres -->
+        <section class="filters-section">
+            <h2>Transactions</h2>
+            <div class="filters">
+                <div class="filter-group">
+                    <label for="filter-type">Type</label>
+                    <select id="filter-type">
+                        <option value="all">Tous</option>
+                        <option value="revenue">Revenus</option>
+                        <option value="expense">Dépenses</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="filter-category">Catégorie</label>
+                    <select id="filter-category">
+                        <option value="all">Toutes</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="filter-period">Période</label>
+                    <select id="filter-period">
+                        <option value="all">Tout</option>
+                        <option value="today">Aujourd'hui</option>
+                        <option value="week">Cette semaine</option>
+                        <option value="month">Ce mois</option>
+                        <option value="year">Cette année</option>
+                        <option value="custom">Personnalisée</option>
+                    </select>
+                </div>
+
+                <div class="filter-group custom-dates hidden">
+                    <label for="filter-date-start">Du</label>
+                    <input type="date" id="filter-date-start">
+                </div>
+
+                <div class="filter-group custom-dates hidden">
+                    <label for="filter-date-end">Au</label>
+                    <input type="date" id="filter-date-end">
+                </div>
+            </div>
+        </section>
+
+        <!-- Liste des transactions -->
+        <section class="transactions-section">
+            <div class="transactions-header">
+                <span id="transactions-count">0 transaction(s)</span>
+                <div class="sort-options">
+                    <label>Trier par:</label>
+                    <select id="sort-select">
+                        <option value="date-desc">Date (récent)</option>
+                        <option value="date-asc">Date (ancien)</option>
+                        <option value="amount-desc">Montant (élevé)</option>
+                        <option value="amount-asc">Montant (faible)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="transactions-list" class="transactions-list">
+                <!-- Les transactions seront ajoutées ici -->
+            </div>
+
+            <div id="no-transactions" class="no-transactions">
+                <div class="no-transactions-icon">📭</div>
+                <h3>Aucune transaction</h3>
+                <p>Ajoutez votre première transaction pour commencer</p>
+            </div>
+        </section>
+    </div>
+
+    <script src="/Gestionnaire/script.js"></script>
+</body>
+</html>
