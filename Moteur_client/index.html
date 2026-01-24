@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moteur de Recherche Intelligent</title>
+    <link rel="stylesheet" href="/Moteur_client/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>🔍 Moteur de Recherche</h1>
+            <p class="subtitle">Recherche instantanée côté client avec 500+ articles</p>
+        </header>
+
+        <!-- Barre de recherche -->
+        <div class="search-section">
+            <div class="search-box">
+                <div class="search-input-container">
+                    <span class="search-icon">🔍</span>
+                    <input 
+                        type="text" 
+                        id="search-input" 
+                        class="search-input"
+                        placeholder="Rechercher par titre, description, auteur..."
+                        autocomplete="off"
+                    >
+                    <button id="clear-search" class="clear-btn hidden">✕</button>
+                </div>
+                <div class="search-info">
+                    <span id="search-time" class="search-time"></span>
+                    <span id="results-count" class="results-count">0 résultats</span>
+                </div>
+            </div>
+
+            <!-- Filtres avancés -->
+            <div class="filters-container">
+                <div class="filter-group">
+                    <label>Catégorie</label>
+                    <select id="category-filter">
+                        <option value="all">Toutes les catégories</option>
+                        <option value="technology">Technologie</option>
+                        <option value="science">Science</option>
+                        <option value="business">Business</option>
+                        <option value="health">Santé</option>
+                        <option value="sports">Sports</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label>Trier par</label>
+                    <select id="sort-select">
+                        <option value="relevance">Pertinence</option>
+                        <option value="date-desc">Date (récent)</option>
+                        <option value="date-asc">Date (ancien)</option>
+                        <option value="title-asc">Titre A-Z</option>
+                        <option value="title-desc">Titre Z-A</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label>
+                        <input type="checkbox" id="exact-match">
+                        Recherche exacte
+                    </label>
+                </div>
+
+                <div class="filter-group">
+                    <label>
+                        <input type="checkbox" id="case-sensitive">
+                        Sensible à la casse
+                    </label>
+                </div>
+            </div>
+
+            <!-- Suggestions -->
+            <div id="suggestions" class="suggestions hidden"></div>
+        </div>
+
+        <!-- Statistiques -->
+        <div class="stats-bar">
+            <div class="stat-item">
+                <span class="stat-icon">📚</span>
+                <span>Total: <strong id="total-articles">0</strong></span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-icon">✓</span>
+                <span>Affichés: <strong id="displayed-articles">0</strong></span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-icon">⚡</span>
+                <span>Performance: <strong id="search-performance">Excellent</strong></span>
+            </div>
+        </div>
+
+        <!-- Résultats -->
+        <div class="results-section">
+            <!-- Loading -->
+            <div id="loading" class="loading hidden">
+                <div class="spinner"></div>
+                <p>Recherche en cours...</p>
+            </div>
+
+            <!-- Liste des résultats -->
+            <div id="results-container" class="results-container">
+                <!-- Les résultats seront ajoutés ici -->
+            </div>
+
+            <!-- Message aucun résultat -->
+            <div id="no-results" class="no-results hidden">
+                <div class="no-results-icon">🔍</div>
+                <h2>Aucun résultat trouvé</h2>
+                <p id="no-results-message">Essayez avec d'autres mots-clés</p>
+                <div class="suggestions-box">
+                    <h3>Suggestions:</h3>
+                    <ul id="search-suggestions"></ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <div id="pagination" class="pagination hidden">
+            <button id="prev-page" class="pagination-btn" disabled>← Précédent</button>
+            <span id="page-info" class="page-info">Page 1 sur 1</span>
+            <button id="next-page" class="pagination-btn">Suivant →</button>
+        </div>
+    </div>
+
+    <!-- Toast notifications -->
+    <div id="toast" class="toast hidden"></div>
+
+    <script src="/Moteur_client/script.js"></script>
+</body>
+</html>
