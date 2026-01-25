@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Système de Pagination Dynamique</title>
+    <link rel="stylesheet" href="/Pagination/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>📄 Système de Pagination</h1>
+            <p class="subtitle">Gestion avancée de grandes listes de données</p>
+        </header>
+
+        <!-- Tabs pour différents types de pagination -->
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="classic">Pagination Classique</button>
+            <button class="tab-btn" data-tab="smart">Pagination Intelligente</button>
+            <button class="tab-btn" data-tab="infinite">Infinite Scroll</button>
+            <button class="tab-btn" data-tab="loadmore">Load More</button>
+        </div>
+
+        <!-- TAB 1: PAGINATION CLASSIQUE -->
+        <div id="classic-tab" class="tab-content active">
+            <div class="section">
+                <div class="section-header">
+                    <h2>📋 Pagination Classique</h2>
+                    <div class="controls">
+                        <label>
+                            Éléments par page:
+                            <select id="classic-items-per-page">
+                                <option value="5">5</option>
+                                <option value="10" selected>10</option>
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                            </select>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="stats-bar">
+                    <span>Total: <strong id="classic-total">0</strong></span>
+                    <span>Page: <strong id="classic-current-page">1</strong>/<strong id="classic-total-pages">1</strong></span>
+                    <span>Affichés: <strong id="classic-showing">0-0</strong></span>
+                </div>
+
+                <div id="classic-list" class="items-list">
+                    <!-- Items seront ajoutés ici -->
+                </div>
+
+                <div id="classic-pagination" class="pagination">
+                    <!-- Pagination sera générée ici -->
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: PAGINATION INTELLIGENTE (avec ellipses) -->
+        <div id="smart-tab" class="tab-content">
+            <div class="section">
+                <div class="section-header">
+                    <h2>🧠 Pagination Intelligente</h2>
+                    <div class="controls">
+                        <label>
+                            Éléments par page:
+                            <select id="smart-items-per-page">
+                                <option value="8">8</option>
+                                <option value="12" selected>12</option>
+                                <option value="24">24</option>
+                            </select>
+                        </label>
+                        <label>
+                            Boutons visibles:
+                            <select id="smart-max-buttons">
+                                <option value="3">3</option>
+                                <option value="5" selected>5</option>
+                                <option value="7">7</option>
+                            </select>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="stats-bar">
+                    <span>Total: <strong id="smart-total">0</strong></span>
+                    <span>Page: <strong id="smart-current-page">1</strong>/<strong id="smart-total-pages">1</strong></span>
+                    <span>Affichés: <strong id="smart-showing">0-0</strong></span>
+                </div>
+
+                <div id="smart-list" class="items-grid">
+                    <!-- Items seront ajoutés ici -->
+                </div>
+
+                <div id="smart-pagination" class="pagination smart">
+                    <!-- Pagination intelligente sera générée ici -->
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: INFINITE SCROLL -->
+        <div id="infinite-tab" class="tab-content">
+            <div class="section">
+                <div class="section-header">
+                    <h2>♾️ Infinite Scroll</h2>
+                    <div class="controls">
+                        <label>
+                            <input type="checkbox" id="infinite-auto-load" checked>
+                            Chargement automatique
+                        </label>
+                        <button id="scroll-to-top" class="btn-secondary">↑ Haut de page</button>
+                    </div>
+                </div>
+
+                <div class="stats-bar">
+                    <span>Chargés: <strong id="infinite-loaded">0</strong>/<strong id="infinite-total">0</strong></span>
+                    <span>Pages: <strong id="infinite-pages-loaded">0</strong></span>
+                </div>
+
+                <div id="infinite-list" class="items-grid">
+                    <!-- Items seront ajoutés ici -->
+                </div>
+
+                <div id="infinite-loader" class="loader hidden">
+                    <div class="spinner"></div>
+                    <p>Chargement...</p>
+                </div>
+
+                <div id="infinite-end" class="end-message hidden">
+                    ✓ Tous les éléments ont été chargés
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: LOAD MORE -->
+        <div id="loadmore-tab" class="tab-content">
+            <div class="section">
+                <div class="section-header">
+                    <h2>➕ Load More Button</h2>
+                    <div class="controls">
+                        <label>
+                            Charger par batch:
+                            <select id="loadmore-batch-size">
+                                <option value="6">6</option>
+                                <option value="12" selected>12</option>
+                                <option value="24">24</option>
+                            </select>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="stats-bar">
+                    <span>Chargés: <strong id="loadmore-loaded">0</strong>/<strong id="loadmore-total">0</strong></span>
+                    <span>Restants: <strong id="loadmore-remaining">0</strong></span>
+                </div>
+
+                <div id="loadmore-list" class="items-list">
+                    <!-- Items seront ajoutés ici -->
+                </div>
+
+                <div class="load-more-container">
+                    <button id="load-more-btn" class="btn-load-more">
+                        Charger plus d'éléments
+                    </button>
+                    <div id="loadmore-loader" class="loader-inline hidden">
+                        <div class="spinner-small"></div>
+                    </div>
+                </div>
+
+                <div id="loadmore-end" class="end-message hidden">
+                    ✓ Tous les éléments ont été chargés
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/Pagination/script.js"></script>
+</body>
+</html>
