@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag & Drop Dashboard</title>
+    <link rel="stylesheet" href="/Drag_drop/style.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="nav-brand">
+                <span class="logo">📊</span>
+                <h1>Mon Dashboard</h1>
+            </div>
+            <div class="nav-actions">
+                <button id="theme-toggle" class="nav-btn" title="Changer le thème">
+                    🌙
+                </button>
+                <button id="add-widget-btn" class="nav-btn primary">
+                    ➕ Ajouter un widget
+                </button>
+                <button id="reset-btn" class="nav-btn danger">
+                    🔄 Réinitialiser
+                </button>
+                <button id="export-btn" class="nav-btn">
+                    📥 Exporter
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Container principal -->
+    <div class="container">
+        <!-- Dashboard grid -->
+        <div id="dashboard" class="dashboard">
+            <!-- Les widgets seront ajoutés ici dynamiquement -->
+        </div>
+
+        <!-- Message de dashboard vide -->
+        <div id="empty-dashboard" class="empty-dashboard hidden">
+            <div class="empty-icon">📭</div>
+            <h2>Dashboard vide</h2>
+            <p>Ajoutez votre premier widget pour commencer</p>
+            <button class="btn-primary" onclick="document.getElementById('add-widget-btn').click()">
+                ➕ Ajouter un widget
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal d'ajout de widget -->
+    <div id="add-widget-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Ajouter un widget</h2>
+                <button class="modal-close" id="close-modal">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="widget-gallery">
+                    <div class="widget-option" data-type="stats">
+                        <div class="widget-option-icon">📈</div>
+                        <h3>Statistiques</h3>
+                        <p>Afficher des métriques importantes</p>
+                    </div>
+                    <div class="widget-option" data-type="chart">
+                        <div class="widget-option-icon">📊</div>
+                        <h3>Graphique</h3>
+                        <p>Visualisation des données</p>
+                    </div>
+                    <div class="widget-option" data-type="todo">
+                        <div class="widget-option-icon">✅</div>
+                        <h3>To-Do List</h3>
+                        <p>Gérer vos tâches</p>
+                    </div>
+                    <div class="widget-option" data-type="calendar">
+                        <div class="widget-option-icon">📅</div>
+                        <h3>Calendrier</h3>
+                        <p>Vue mensuelle</p>
+                    </div>
+                    <div class="widget-option" data-type="notes">
+                        <div class="widget-option-icon">📝</div>
+                        <h3>Notes</h3>
+                        <p>Prendre des notes rapides</p>
+                    </div>
+                    <div class="widget-option" data-type="weather">
+                        <div class="widget-option-icon">🌤️</div>
+                        <h3>Météo</h3>
+                        <p>Conditions actuelles</p>
+                    </div>
+                    <div class="widget-option" data-type="clock">
+                        <div class="widget-option-icon">🕐</div>
+                        <h3>Horloge</h3>
+                        <p>Heure en temps réel</p>
+                    </div>
+                    <div class="widget-option" data-type="quote">
+                        <div class="widget-option-icon">💭</div>
+                        <h3>Citation</h3>
+                        <p>Citation inspirante</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast notification -->
+    <div id="toast" class="toast hidden"></div>
+
+    <script src="/Drag_drop/script.js"></script>
+</body>
+</html>
