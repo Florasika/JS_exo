@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Système de Notifications Avancé</title>
+    <link rel="stylesheet" href="/Notification/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>🔔 Système de Notifications</h1>
+            <p class="subtitle">Gestion avancée de toasts avec file d'attente et animations</p>
+        </header>
+
+        <!-- Panel de contrôle -->
+        <div class="control-panel">
+            <h2>🎛️ Panneau de contrôle</h2>
+            
+            <!-- Configuration de base -->
+            <div class="config-section">
+                <h3>Type de notification</h3>
+                <div class="button-group">
+                    <button class="demo-btn success" onclick="showDemoNotification('success')">
+                        ✓ Succès
+                    </button>
+                    <button class="demo-btn error" onclick="showDemoNotification('error')">
+                        ✕ Erreur
+                    </button>
+                    <button class="demo-btn warning" onclick="showDemoNotification('warning')">
+                        ⚠ Avertissement
+                    </button>
+                    <button class="demo-btn info" onclick="showDemoNotification('info')">
+                        ℹ Information
+                    </button>
+                </div>
+            </div>
+
+            <!-- Position -->
+            <div class="config-section">
+                <h3>Position</h3>
+                <div class="button-group">
+                    <button class="position-btn" onclick="changePosition('top-right')">
+                        ↗ Haut Droite
+                    </button>
+                    <button class="position-btn" onclick="changePosition('top-left')">
+                        ↖ Haut Gauche
+                    </button>
+                    <button class="position-btn" onclick="changePosition('bottom-right')">
+                        ↘ Bas Droite
+                    </button>
+                    <button class="position-btn" onclick="changePosition('bottom-left')">
+                        ↙ Bas Gauche
+                    </button>
+                </div>
+            </div>
+
+            <!-- Options -->
+            <div class="config-section">
+                <h3>Options</h3>
+                <div class="options-grid">
+                    <label class="option-item">
+                        <input type="checkbox" id="auto-close" checked>
+                        <span>Fermeture automatique</span>
+                    </label>
+                    <label class="option-item">
+                        <input type="checkbox" id="show-progress" checked>
+                        <span>Barre de progression</span>
+                    </label>
+                    <label class="option-item">
+                        <input type="checkbox" id="pausable" checked>
+                        <span>Pause au survol</span>
+                    </label>
+                    <label class="option-item">
+                        <input type="checkbox" id="clickable">
+                        <span>Fermeture au clic</span>
+                    </label>
+                </div>
+                <div class="slider-group">
+                    <label>
+                        Durée: <span id="duration-value">5000</span>ms
+                        <input type="range" id="duration-slider" min="1000" max="10000" value="5000" step="500">
+                    </label>
+                </div>
+            </div>
+
+            <!-- Actions spéciales -->
+            <div class="config-section">
+                <h3>Actions spéciales</h3>
+                <div class="button-group">
+                    <button class="action-btn" onclick="showNotificationWithAction()">
+                        🔘 Avec Action
+                    </button>
+                    <button class="action-btn" onclick="showPromiseNotification()">
+                        ⏳ Promesse
+                    </button>
+                    <button class="action-btn" onclick="showMultipleNotifications()">
+                        📚 Multiple (5)
+                    </button>
+                    <button class="action-btn" onclick="showPriorityNotification()">
+                        🚨 Haute Priorité
+                    </button>
+                </div>
+            </div>
+
+            <!-- Gestion -->
+            <div class="config-section">
+                <h3>Gestion</h3>
+                <div class="button-group">
+                    <button class="manage-btn" onclick="notificationSystem.clearAll()">
+                        🗑️ Tout Effacer
+                    </button>
+                    <button class="manage-btn" onclick="showQueueStatus()">
+                        📊 Statut de la file
+                    </button>
+                    <button class="manage-btn" onclick="togglePauseAll()">
+                        ⏸️ Pause/Reprendre
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistiques -->
+        <div class="stats-panel">
+            <div class="stat-card">
+                <div class="stat-icon">🔔</div>
+                <div class="stat-content">
+                    <div class="stat-value" id="total-notifications">0</div>
+                    <div class="stat-label">Total affiché</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">👁️</div>
+                <div class="stat-content">
+                    <div class="stat-value" id="active-notifications">0</div>
+                    <div class="stat-label">Actives</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">⏱️</div>
+                <div class="stat-content">
+                    <div class="stat-value" id="queue-count">0</div>
+                    <div class="stat-label">En attente</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Documentation API -->
+        <div class="api-docs">
+            <h2>📖 Documentation API</h2>
+            <div class="code-block">
+                <pre><code>// Notification simple
+notificationSystem.show({
+    type: 'success',
+    title: 'Succès !',
+    message: 'Opération réussie',
+    duration: 5000
+});
+
+// Avec action
+notificationSystem.show({
+    type: 'info',
+    title: 'Nouvelle mise à jour',
+    message: 'Version 2.0 disponible',
+    action: {
+        text: 'Mettre à jour',
+        onClick: () => console.log('Update clicked')
+    }
+});
+
+// Promesse
+notificationSystem.promise(
+    fetchData(),
+    {
+        pending: 'Chargement...',
+        success: 'Données chargées !',
+        error: 'Erreur de chargement'
+    }
+);</code></pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- Containers de notifications (créés dynamiquement) -->
+    
+    <script src="/Notification/script.js"></script>
+</body>
+</html>
