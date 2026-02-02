@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecteur Audio Personnalisé</title>
+    <link rel="stylesheet" href="/Lecteur_audio/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1>🎵 Lecteur Audio</h1>
+                <div class="header-actions">
+                    <button id="theme-toggle" class="icon-btn" title="Changer le thème">
+                        🌙
+                    </button>
+                    <button id="add-track-btn" class="icon-btn" title="Ajouter une piste">
+                        ➕
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main player -->
+        <div class="player-container">
+            <!-- Album Art & Info -->
+            <div class="track-info">
+                <div class="album-art-container">
+                    <img id="album-art" src="https://via.placeholder.com/300x300/667eea/ffffff?text=🎵" alt="Album Art">
+                    <div class="vinyl-overlay"></div>
+                    <div class="playing-animation hidden">
+                        <div class="wave"></div>
+                        <div class="wave"></div>
+                        <div class="wave"></div>
+                    </div>
+                </div>
+                <div class="track-details">
+                    <h2 id="track-title">Sélectionnez une piste</h2>
+                    <p id="track-artist">Artiste inconnu</p>
+                    <p id="track-album">Album inconnu</p>
+                </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <span id="current-time" class="time">0:00</span>
+                <div class="progress-bar" id="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                    <div class="progress-handle" id="progress-handle"></div>
+                </div>
+                <span id="duration-time" class="time">0:00</span>
+            </div>
+
+            <!-- Controls -->
+            <div class="controls">
+                <button id="shuffle-btn" class="control-btn" title="Lecture aléatoire">
+                    🔀
+                </button>
+                <button id="prev-btn" class="control-btn" title="Précédent">
+                    ⏮️
+                </button>
+                <button id="play-pause-btn" class="control-btn play-btn" title="Lecture">
+                    ▶️
+                </button>
+                <button id="next-btn" class="control-btn" title="Suivant">
+                    ⏭️
+                </button>
+                <button id="repeat-btn" class="control-btn" title="Répéter">
+                    🔁
+                </button>
+            </div>
+
+            <!-- Volume Control -->
+            <div class="volume-control">
+                <button id="mute-btn" class="volume-btn">🔊</button>
+                <div class="volume-slider-container">
+                    <input type="range" id="volume-slider" class="volume-slider" min="0" max="100" value="70">
+                </div>
+                <span id="volume-value">70%</span>
+            </div>
+
+            <!-- Speed Control -->
+            <div class="speed-control">
+                <label>Vitesse: </label>
+                <select id="speed-select">
+                    <option value="0.5">0.5x</option>
+                    <option value="0.75">0.75x</option>
+                    <option value="1" selected>1x</option>
+                    <option value="1.25">1.25x</option>
+                    <option value="1.5">1.5x</option>
+                    <option value="2">2x</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Playlist -->
+        <div class="playlist-container">
+            <div class="playlist-header">
+                <h3>📋 Playlist</h3>
+                <div class="playlist-actions">
+                    <button id="clear-playlist-btn" class="playlist-action-btn">
+                        🗑️ Vider
+                    </button>
+                    <button id="download-playlist-btn" class="playlist-action-btn">
+                        📥 Exporter
+                    </button>
+                </div>
+            </div>
+            <div id="playlist" class="playlist">
+                <!-- Les pistes seront ajoutées ici -->
+            </div>
+            <div id="empty-playlist" class="empty-playlist">
+                <div class="empty-icon">🎵</div>
+                <p>Aucune piste dans la playlist</p>
+                <button class="btn-primary" onclick="document.getElementById('add-track-btn').click()">
+                    Ajouter des pistes
+                </button>
+            </div>
+        </div>
+
+        <!-- Visualizer -->
+        <div class="visualizer-container">
+            <canvas id="visualizer" width="800" height="200"></canvas>
+        </div>
+
+        <!-- Keyboard Shortcuts -->
+        <div class="shortcuts-panel">
+            <h3>⌨️ Raccourcis clavier</h3>
+            <div class="shortcuts-grid">
+                <div class="shortcut-item">
+                    <kbd>Space</kbd>
+                    <span>Play/Pause</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd>←</kbd>
+                    <span>Piste précédente</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd>→</kbd>
+                    <span>Piste suivante</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd>↑</kbd>
+                    <span>Volume +</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd>↓</kbd>
+                    <span>Volume -</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd>M</kbd>
+                    <span>Mute</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal d'ajout de piste -->
+    <div id="add-track-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Ajouter une piste</h2>
+                <button class="modal-close" id="close-modal">✕</button>
+            </div>
+            <div class="modal-body">
+                <form id="add-track-form">
+                    <div class="form-group">
+                        <label>URL de l'audio</label>
+                        <input type="url" id="track-url" placeholder="https://example.com/audio.mp3" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Titre</label>
+                        <input type="text" id="track-title-input" placeholder="Nom de la piste" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Artiste</label>
+                        <input type="text" id="track-artist-input" placeholder="Nom de l'artiste">
+                    </div>
+                    <div class="form-group">
+                        <label>Album</label>
+                        <input type="text" id="track-album-input" placeholder="Nom de l'album">
+                    </div>
+                    <div class="form-group">
+                        <label>URL de la pochette</label>
+                        <input type="url" id="track-cover-input" placeholder="https://example.com/cover.jpg">
+                    </div>
+                    <button type="submit" class="btn-primary">Ajouter à la playlist</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Audio Element (caché) -->
+    <audio id="audio-player" preload="metadata"></audio>
+
+    <script src="/Lecteur_audio/main.js"></script>
+</body>
+</html>
