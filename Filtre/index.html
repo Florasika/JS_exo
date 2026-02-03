@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filtres E-commerce Avancés</title>
+    <link rel="stylesheet" href="/Filtre/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1>🛍️ Boutique en ligne</h1>
+                <div class="header-stats">
+                    <span class="stat-badge">
+                        <strong id="products-count">0</strong> produits
+                    </span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Sidebar Filters -->
+            <aside class="sidebar">
+                <div class="filters-header">
+                    <h2>🔍 Filtres</h2>
+                    <button id="reset-filters-btn" class="btn-reset">
+                        ↺ Réinitialiser
+                    </button>
+                </div>
+
+                <!-- Recherche -->
+                <div class="filter-section">
+                    <h3>Recherche</h3>
+                    <div class="search-box">
+                        <input 
+                            type="text" 
+                            id="search-input" 
+                            class="search-input"
+                            placeholder="Rechercher un produit..."
+                        >
+                        <span class="search-icon">🔍</span>
+                    </div>
+                </div>
+
+                <!-- Prix -->
+                <div class="filter-section">
+                    <h3>Prix</h3>
+                    <div class="price-filter">
+                        <div class="price-inputs">
+                            <input 
+                                type="number" 
+                                id="price-min" 
+                                class="price-input"
+                                placeholder="Min"
+                                min="0"
+                            >
+                            <span>-</span>
+                            <input 
+                                type="number" 
+                                id="price-max" 
+                                class="price-input"
+                                placeholder="Max"
+                                min="0"
+                            >
+                        </div>
+                        <div class="price-range">
+                            <input 
+                                type="range" 
+                                id="price-range" 
+                                class="range-slider"
+                                min="0" 
+                                max="2000" 
+                                value="2000"
+                            >
+                            <div class="range-values">
+                                <span>0€</span>
+                                <span id="range-value">2000€</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Catégories -->
+                <div class="filter-section">
+                    <h3>Catégories</h3>
+                    <div class="filter-options" id="categories-filter">
+                        <label class="filter-option">
+                            <input type="checkbox" value="all" id="category-all" checked>
+                            <span>Toutes les catégories</span>
+                            <span class="count" id="count-all">0</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" value="electronique" class="category-checkbox">
+                            <span>Électronique</span>
+                            <span class="count" id="count-electronique">0</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" value="vetements" class="category-checkbox">
+                            <span>Vêtements</span>
+                            <span class="count" id="count-vetements">0</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" value="maison" class="category-checkbox">
+                            <span>Maison & Déco</span>
+                            <span class="count" id="count-maison">0</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" value="sport" class="category-checkbox">
+                            <span>Sport & Loisirs</span>
+                            <span class="count" id="count-sport">0</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" value="beaute" class="category-checkbox">
+                            <span>Beauté & Santé</span>
+                            <span class="count" id="count-beaute">0</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Notes -->
+                <div class="filter-section">
+                    <h3>Notes clients</h3>
+                    <div class="filter-options">
+                        <label class="filter-option">
+                            <input type="radio" name="rating" value="all" checked>
+                            <span>Toutes les notes</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="radio" name="rating" value="4">
+                            <span class="rating-stars">⭐⭐⭐⭐ & plus</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="radio" name="rating" value="3">
+                            <span class="rating-stars">⭐⭐⭐ & plus</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="radio" name="rating" value="2">
+                            <span class="rating-stars">⭐⭐ & plus</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Disponibilité -->
+                <div class="filter-section">
+                    <h3>Disponibilité</h3>
+                    <div class="filter-options">
+                        <label class="filter-option">
+                            <input type="checkbox" id="in-stock">
+                            <span>En stock uniquement</span>
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" id="on-sale">
+                            <span>En promotion</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Marques -->
+                <div class="filter-section">
+                    <h3>Marques</h3>
+                    <div class="filter-options" id="brands-filter">
+                        <!-- Généré dynamiquement -->
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Products Grid -->
+            <main class="products-section">
+                <!-- Toolbar -->
+                <div class="products-toolbar">
+                    <div class="results-info">
+                        <strong id="results-count">0</strong> résultats
+                    </div>
+                    <div class="sort-controls">
+                        <label>Trier par:</label>
+                        <select id="sort-select">
+                            <option value="pertinence">Pertinence</option>
+                            <option value="price-asc">Prix croissant</option>
+                            <option value="price-desc">Prix décroissant</option>
+                            <option value="name-asc">Nom A-Z</option>
+                            <option value="name-desc">Nom Z-A</option>
+                            <option value="rating-desc">Meilleures notes</option>
+                            <option value="newest">Plus récents</option>
+                        </select>
+                    </div>
+                    <div class="view-controls">
+                        <button class="view-btn active" data-view="grid" title="Vue grille">
+                            ⊞
+                        </button>
+                        <button class="view-btn" data-view="list" title="Vue liste">
+                            ☰
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Active Filters Tags -->
+                <div id="active-filters" class="active-filters hidden">
+                    <!-- Les tags de filtres actifs seront ajoutés ici -->
+                </div>
+
+                <!-- Products Grid/List -->
+                <div id="products-grid" class="products-grid">
+                    <!-- Les produits seront ajoutés ici -->
+                </div>
+
+                <!-- No Results -->
+                <div id="no-results" class="no-results hidden">
+                    <div class="no-results-icon">🔍</div>
+                    <h2>Aucun produit trouvé</h2>
+                    <p>Essayez de modifier vos filtres ou votre recherche</p>
+                    <button class="btn-primary" onclick="resetAllFilters()">
+                        Réinitialiser les filtres
+                    </button>
+                </div>
+
+                <!-- Loading -->
+                <div id="loading" class="loading hidden">
+                    <div class="spinner"></div>
+                    <p>Chargement des produits...</p>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="/Filtre/main.js"></script>
+</body>
+</html>
