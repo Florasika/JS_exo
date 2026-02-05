@@ -1,0 +1,448 @@
+/* ===== RESET & VARIABLES ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #6366f1;
+    --primary-dark: #4f46e5;
+    --success-color: #10b981;
+    --text-dark: #1f2937;
+    --text-light: #6b7280;
+    --bg-light: #f9fafb;
+    --border-color: #e5e7eb;
+    --white: #ffffff;
+    --shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* ===== CONTAINER ===== */
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* ===== HEADER ===== */
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+    color: var(--white);
+}
+
+.header h1 {
+    font-size: 42px;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 18px;
+    opacity: 0.9;
+}
+
+/* ===== TABS ===== */
+.tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+    justify-content: center;
+}
+
+.tab-btn {
+    padding: 15px 40px;
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--white);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.tab-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.tab-btn.active {
+    background: var(--white);
+    color: var(--primary-color);
+    border-color: var(--white);
+}
+
+/* ===== TAB PANELS ===== */
+.tab-panel {
+    display: none;
+}
+
+.tab-panel.active {
+    display: block;
+    animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== GRID ===== */
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+/* ===== FORM SECTION ===== */
+.form-section {
+    background: var(--white);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: var(--shadow-lg);
+}
+
+.form-section h2 {
+    font-size: 24px;
+    color: var(--text-dark);
+    margin-bottom: 25px;
+}
+
+.form-card {
+    background: var(--bg-light);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.form-card h3 {
+    font-size: 18px;
+    color: var(--text-dark);
+    margin-bottom: 15px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 6px;
+    font-size: 14px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 10px 15px;
+    border: 2px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    transition: all 0.3s;
+}
+
+.form-input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+textarea.form-input {
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* ===== INVOICE ITEMS ===== */
+.invoice-item {
+    background: var(--white);
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border: 2px solid var(--border-color);
+}
+
+.invoice-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.invoice-item-header h4 {
+    font-size: 15px;
+    color: var(--text-dark);
+}
+
+.btn-delete {
+    background: #ef4444;
+    color: var(--white);
+    border: none;
+    padding: 6px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.2s;
+}
+
+.btn-delete:hover {
+    background: #dc2626;
+}
+
+/* ===== EXPERIENCE / EDUCATION ITEMS ===== */
+.experience-item,
+.education-item {
+    background: var(--white);
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border: 2px solid var(--border-color);
+}
+
+.item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.item-header h4 {
+    font-size: 15px;
+    color: var(--text-dark);
+}
+
+/* ===== BUTTONS ===== */
+.btn {
+    padding: 12px 30px;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: inherit;
+}
+
+.btn-primary {
+    background: var(--primary-color);
+    color: var(--white);
+}
+
+.btn-primary:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.btn-secondary {
+    background: var(--bg-light);
+    color: var(--text-dark);
+    border: 2px solid var(--border-color);
+}
+
+.btn-secondary:hover {
+    background: var(--border-color);
+}
+
+.btn-large {
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+    margin-top: 20px;
+}
+
+/* ===== PREVIEW SECTION ===== */
+.preview-section {
+    position: sticky;
+    top: 20px;
+}
+
+.preview-section h2 {
+    font-size: 24px;
+    color: var(--white);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.preview-box {
+    background: var(--white);
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: var(--shadow-lg);
+    min-height: 600px;
+    overflow-y: auto;
+    max-height: 80vh;
+}
+
+/* ===== INVOICE PREVIEW ===== */
+.preview-content {
+    font-size: 13px;
+}
+
+.preview-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 3px solid var(--primary-color);
+}
+
+.preview-header h1 {
+    font-size: 22px;
+    color: var(--primary-color);
+    margin-bottom: 5px;
+}
+
+.preview-invoice-title h2 {
+    font-size: 28px;
+    color: var(--text-dark);
+    text-align: right;
+}
+
+.preview-invoice-title p {
+    text-align: right;
+    color: var(--text-light);
+    margin-top: 5px;
+}
+
+.preview-client {
+    margin-bottom: 25px;
+    padding: 15px;
+    background: var(--bg-light);
+    border-radius: 8px;
+}
+
+.preview-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 25px;
+}
+
+.preview-table th {
+    background: var(--primary-color);
+    color: var(--white);
+    padding: 12px;
+    text-align: left;
+    font-weight: 600;
+}
+
+.preview-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.preview-table tr:last-child td {
+    border-bottom: none;
+}
+
+.preview-total {
+    text-align: right;
+    font-size: 15px;
+    padding: 15px;
+    background: var(--bg-light);
+    border-radius: 8px;
+}
+
+.preview-total p {
+    margin-bottom: 8px;
+}
+
+.preview-total strong {
+    font-size: 18px;
+    color: var(--primary-color);
+}
+
+/* ===== CV PREVIEW ===== */
+.cv-preview-content {
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.cv-header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 3px solid var(--primary-color);
+}
+
+.cv-header h1 {
+    font-size: 28px;
+    color: var(--primary-color);
+    margin-bottom: 5px;
+}
+
+.cv-header h3 {
+    font-size: 18px;
+    color: var(--text-light);
+    margin-bottom: 10px;
+}
+
+.cv-section {
+    margin-bottom: 25px;
+}
+
+.cv-section h4 {
+    font-size: 16px;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 2px solid var(--border-color);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.cv-experience-item,
+.cv-education-item {
+    margin-bottom: 15px;
+}
+
+.cv-experience-item h5,
+.cv-education-item h5 {
+    font-size: 15px;
+    color: var(--text-dark);
+    margin-bottom: 3px;
+}
+
+.cv-meta {
+    color: var(--text-light);
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+    .grid-2 {
+        grid-template-columns: 1fr;
+    }
+    
+    .preview-section {
+        position: static;
+    }
+}
+
+@media (max-width: 768px) {
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .tabs {
+        flex-direction: column;
+    }
+    
+    .preview-box {
+        padding: 20px;
+    }
+}

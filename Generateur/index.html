@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Générateur de PDF</title>
+    <link rel="stylesheet" href="/Generateur/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>📄 Générateur de PDF</h1>
+            <p class="subtitle">Créez des factures et CV professionnels en un clic</p>
+        </header>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="invoice">
+                🧾 Facture
+            </button>
+            <button class="tab-btn" data-tab="cv">
+                📋 CV
+            </button>
+        </div>
+
+        <!-- Tab Content -->
+        <div class="tab-content">
+            <!-- Facture Tab -->
+            <div id="invoice-tab" class="tab-panel active">
+                <div class="grid-2">
+                    <!-- Formulaire -->
+                    <div class="form-section">
+                        <h2>Informations de la facture</h2>
+                        
+                        <div class="form-card">
+                            <h3>🏢 Votre entreprise</h3>
+                            <div class="form-group">
+                                <label>Nom de l'entreprise</label>
+                                <input type="text" id="company-name" value="MonEntreprise SARL" class="form-input">
+                            </div>
+                            <div class="form-group">
+                                <label>Adresse</label>
+                                <input type="text" id="company-address" value="123 Rue du Commerce" class="form-input">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Code postal</label>
+                                    <input type="text" id="company-zip" value="75001" class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label>Ville</label>
+                                    <input type="text" id="company-city" value="Paris" class="form-input">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input type="email" id="company-email" value="contact@monentreprise.fr" class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label>Téléphone</label>
+                                    <input type="tel" id="company-phone" value="01 23 45 67 89" class="form-input">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>SIRET</label>
+                                <input type="text" id="company-siret" value="123 456 789 00012" class="form-input">
+                            </div>
+                        </div>
+
+                        <div class="form-card">
+                            <h3>👤 Client</h3>
+                            <div class="form-group">
+                                <label>Nom du client</label>
+                                <input type="text" id="client-name" value="Société Client SA" class="form-input">
+                            </div>
+                            <div class="form-group">
+                                <label>Adresse</label>
+                                <input type="text" id="client-address" value="456 Avenue des Affaires" class="form-input">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Code postal</label>
+                                    <input type="text" id="client-zip" value="69001" class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label>Ville</label>
+                                    <input type="text" id="client-city" value="Lyon" class="form-input">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-card">
+                            <h3>📋 Détails de la facture</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>N° Facture</label>
+                                    <input type="text" id="invoice-number" value="2024-001" class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label>Date</label>
+                                    <input type="date" id="invoice-date" class="form-input">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Notes / Conditions</label>
+                                <textarea id="invoice-notes" class="form-input" rows="3">Paiement à 30 jours. Merci pour votre confiance.</textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-card">
+                            <h3>📦 Articles</h3>
+                            <div id="invoice-items">
+                                <!-- Les articles seront ajoutés ici -->
+                            </div>
+                            <button class="btn btn-secondary" onclick="addInvoiceItem()">
+                                ➕ Ajouter un article
+                            </button>
+                        </div>
+
+                        <button class="btn btn-primary btn-large" onclick="generateInvoicePDF()">
+                            📥 Générer la facture PDF
+                        </button>
+                    </div>
+
+                    <!-- Prévisualisation -->
+                    <div class="preview-section">
+                        <h2>Prévisualisation</h2>
+                        <div class="preview-box" id="invoice-preview">
+                            <div class="preview-content">
+                                <div class="preview-header">
+                                    <div>
+                                        <h1 id="preview-company-name">MonEntreprise SARL</h1>
+                                        <p id="preview-company-address">123 Rue du Commerce<br>75001 Paris</p>
+                                    </div>
+                                    <div class="preview-invoice-title">
+                                        <h2>FACTURE</h2>
+                                        <p id="preview-invoice-number">N° 2024-001</p>
+                                    </div>
+                                </div>
+                                <div class="preview-client">
+                                    <p><strong>Client:</strong></p>
+                                    <p id="preview-client-info">Société Client SA<br>456 Avenue des Affaires<br>69001 Lyon</p>
+                                </div>
+                                <table class="preview-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Description</th>
+                                            <th>Qté</th>
+                                            <th>Prix HT</th>
+                                            <th>Total HT</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="preview-items">
+                                        <!-- Articles -->
+                                    </tbody>
+                                </table>
+                                <div class="preview-total">
+                                    <p>Total HT: <span id="preview-total-ht">0.00€</span></p>
+                                    <p>TVA (20%): <span id="preview-tva">0.00€</span></p>
+                                    <p><strong>Total TTC: <span id="preview-total-ttc">0.00€</span></strong></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CV Tab -->
+            <div id="cv-tab" class="tab-panel">
+                <div class="grid-2">
+                    <!-- Formulaire CV -->
+                    <div class="form-section">
+                        <h2>Informations du CV</h2>
+                        
+                        <div class="form-card">
+                            <h3>👤 Informations personnelles</h3>
+                            <div class="form-group">
+                                <label>Nom complet</label>
+                                <input type="text" id="cv-name" value="Jean Dupont" class="form-input">
+                            </div>
+                            <div class="form-group">
+                                <label>Titre / Poste</label>
+                                <input type="text" id="cv-title" value="Développeur Full Stack" class="form-input">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input type="email" id="cv-email" value="jean.dupont@email.fr" class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label>Téléphone</label>
+                                    <input type="tel" id="cv-phone" value="06 12 34 56 78" class="form-input">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Adresse</label>
+                                <input type="text" id="cv-address" value="Paris, France" class="form-input">
+                            </div>
+                            <div class="form-group">
+                                <label>LinkedIn</label>
+                                <input type="text" id="cv-linkedin" value="linkedin.com/in/jeandupont" class="form-input">
+                            </div>
+                        </div>
+
+                        <div class="form-card">
+                            <h3>📝 Résumé professionnel</h3>
+                            <div class="form-group">
+                                <textarea id="cv-summary" class="form-input" rows="4">Développeur passionné avec 5 ans d'expérience en développement web full-stack. Expertise en JavaScript, React, Node.js et bases de données. Capacité à travailler en équipe et à livrer des projets de qualité dans les délais.</textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-card">
+                            <h3>💼 Expérience professionnelle</h3>
+                            <div id="cv-experiences">
+                                <!-- Les expériences seront ajoutées ici -->
+                            </div>
+                            <button class="btn btn-secondary" onclick="addExperience()">
+                                ➕ Ajouter une expérience
+                            </button>
+                        </div>
+
+                        <div class="form-card">
+                            <h3>🎓 Formation</h3>
+                            <div id="cv-education">
+                                <!-- Les formations seront ajoutées ici -->
+                            </div>
+                            <button class="btn btn-secondary" onclick="addEducation()">
+                                ➕ Ajouter une formation
+                            </button>
+                        </div>
+
+                        <div class="form-card">
+                            <h3>🛠️ Compétences</h3>
+                            <div class="form-group">
+                                <label>Séparez les compétences par des virgules</label>
+                                <textarea id="cv-skills" class="form-input" rows="3">JavaScript, React, Node.js, Python, SQL, MongoDB, Git, Docker, Agile, UI/UX</textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-card">
+                            <h3>🌍 Langues</h3>
+                            <div class="form-group">
+                                <textarea id="cv-languages" class="form-input" rows="2">Français (Natif), Anglais (Courant), Espagnol (Intermédiaire)</textarea>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary btn-large" onclick="generateCVPDF()">
+                            📥 Générer le CV PDF
+                        </button>
+                    </div>
+
+                    <!-- Prévisualisation CV -->
+                    <div class="preview-section">
+                        <h2>Prévisualisation</h2>
+                        <div class="preview-box" id="cv-preview">
+                            <div class="cv-preview-content">
+                                <div class="cv-header">
+                                    <h1 id="preview-cv-name">Jean Dupont</h1>
+                                    <h3 id="preview-cv-title">Développeur Full Stack</h3>
+                                    <p id="preview-cv-contact">📧 jean.dupont@email.fr | 📱 06 12 34 56 78 | 📍 Paris, France</p>
+                                </div>
+                                <div class="cv-section">
+                                    <h4>RÉSUMÉ</h4>
+                                    <p id="preview-cv-summary">Développeur passionné avec 5 ans d'expérience...</p>
+                                </div>
+                                <div class="cv-section">
+                                    <h4>EXPÉRIENCE</h4>
+                                    <div id="preview-cv-experiences">
+                                        <!-- Expériences -->
+                                    </div>
+                                </div>
+                                <div class="cv-section">
+                                    <h4>FORMATION</h4>
+                                    <div id="preview-cv-education">
+                                        <!-- Formation -->
+                                    </div>
+                                </div>
+                                <div class="cv-section">
+                                    <h4>COMPÉTENCES</h4>
+                                    <p id="preview-cv-skills">JavaScript, React, Node.js...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+    <script src="/Generateur/script.js"></script>
+</body>
+</html>
