@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestionnaire de Thèmes</title>
+    <link rel="stylesheet" href="/Themes/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Gestionnaire de Thèmes</h1>
+            <button class="theme-toggle" id="themeToggle" aria-label="Changer de thème">
+                <span class="icon sun">☀️</span>
+                <span class="icon moon">🌙</span>
+            </button>
+        </header>
+
+        <main>
+            <section class="card">
+                <h2>Design System</h2>
+                <p>Ce gestionnaire de thèmes utilise CSS variables pour une transition fluide entre le mode clair et sombre.</p>
+            </section>
+
+            <section class="card">
+                <h3>Palette de Couleurs</h3>
+                <p>Choisissez votre palette de couleurs :</p>
+                <div class="color-palette">
+                    <button class="color-picker" data-color="blue" style="background: linear-gradient(135deg, #3b82f6, #8b5cf6);">
+                        <span>Bleu</span>
+                    </button>
+                    <button class="color-picker" data-color="green" style="background: linear-gradient(135deg, #10b981, #14b8a6);">
+                        <span>Vert</span>
+                    </button>
+                    <button class="color-picker" data-color="purple" style="background: linear-gradient(135deg, #8b5cf6, #a855f7);">
+                        <span>Violet</span>
+                    </button>
+                    <button class="color-picker" data-color="orange" style="background: linear-gradient(135deg, #f97316, #fb923c);">
+                        <span>Orange</span>
+                    </button>
+                    <button class="color-picker" data-color="pink" style="background: linear-gradient(135deg, #ec4899, #f472b6);">
+                        <span>Rose</span>
+                    </button>
+                    <button class="color-picker" data-color="red" style="background: linear-gradient(135deg, #ef4444, #dc2626);">
+                        <span>Rouge</span>
+                    </button>
+                </div>
+            </section>
+
+            <section class="card">
+                <h3>Couleurs Primaires</h3>
+                <div class="color-grid">
+                    <div class="color-box primary">Primaire</div>
+                    <div class="color-box secondary">Secondaire</div>
+                    <div class="color-box accent">Accent</div>
+                </div>
+            </section>
+
+            <section class="card">
+                <h3>Éléments Interactifs</h3>
+                <button class="btn btn-primary">Bouton Primaire</button>
+                <button class="btn btn-secondary">Bouton Secondaire</button>
+                <input type="text" placeholder="Champ de texte">
+            </section>
+
+            <section class="card">
+                <h3>État du Thème</h3>
+                <p>Thème actuel : <strong id="currentTheme">Light</strong></p>
+                <p>Sauvegarde automatique dans localStorage</p>
+            </section>
+        </main>
+    </div>
+
+    <script src="/Themes/main.js"></script>
+</body>
+</html>
