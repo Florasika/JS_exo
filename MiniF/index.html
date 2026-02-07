@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini SPA</title>
+    <link rel="stylesheet" href="/MiniF/style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="nav-container">
+                <h1 class="logo">Mini SPA</h1>
+                <ul class="nav-links">
+                    <li><a href="/" class="nav-link" data-link>Accueil</a></li>
+                    <li><a href="/about" class="nav-link" data-link>À propos</a></li>
+                    <li><a href="/products" class="nav-link" data-link>Produits</a></li>
+                    <li><a href="/contact" class="nav-link" data-link>Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Loading indicator -->
+        <div id="loading" class="loading hidden">
+            <div class="spinner"></div>
+        </div>
+
+        <!-- Main content -->
+        <main id="content" class="content">
+            <!-- Les pages seront chargées ici -->
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2024 Mini SPA - Architecture sans framework</p>
+        </footer>
+    </div>
+
+    <script type="module" src="/MiniF/script.js"></script>
+</body>
+</html>
