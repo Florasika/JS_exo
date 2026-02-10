@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blackjack - Jeu de Cartes POO</title>
+    <link rel="stylesheet" href="/Jeu_cartes/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🃏 Blackjack</h1>
+            <p class="subtitle">Jeu de cartes orienté objet</p>
+        </header>
+
+        <div class="game-container">
+            <!-- Sidebar with game info -->
+            <aside class="sidebar">
+                <div class="info-card">
+                    <h3>💰 Solde</h3>
+                    <div class="balance" id="playerBalance">1000 €</div>
+                </div>
+
+                <div class="info-card">
+                    <h3>🎯 Mise actuelle</h3>
+                    <div class="current-bet" id="currentBet">0 €</div>
+                </div>
+
+                <div class="info-card">
+                    <h3>📊 Statistiques</h3>
+                    <div class="stats">
+                        <div class="stat-row">
+                            <span>Victoires:</span>
+                            <span id="wins">0</span>
+                        </div>
+                        <div class="stat-row">
+                            <span>Défaites:</span>
+                            <span id="losses">0</span>
+                        </div>
+                        <div class="stat-row">
+                            <span>Égalités:</span>
+                            <span id="ties">0</span>
+                        </div>
+                        <div class="stat-row">
+                            <span>Blackjacks:</span>
+                            <span id="blackjacks">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h3>📖 Règles</h3>
+                    <ul class="rules">
+                        <li>Le but: atteindre 21 sans dépasser</li>
+                        <li>Les figures valent 10</li>
+                        <li>L'As vaut 1 ou 11</li>
+                        <li>Blackjack = 21 avec 2 cartes</li>
+                        <li>Le croupier tire jusqu'à 17</li>
+                    </ul>
+                </div>
+            </aside>
+
+            <!-- Main game area -->
+            <main class="game-area">
+                <!-- Dealer section -->
+                <section class="dealer-section">
+                    <div class="player-info">
+                        <h2>🎩 Croupier</h2>
+                        <div class="score-display">
+                            <span id="dealerScore">0</span>
+                        </div>
+                    </div>
+                    <div class="hand" id="dealerHand">
+                        <!-- Dealer's cards will appear here -->
+                    </div>
+                </section>
+
+                <!-- Game messages -->
+                <div class="game-messages">
+                    <div id="gameMessage" class="message"></div>
+                </div>
+
+                <!-- Player section -->
+                <section class="player-section">
+                    <div class="player-info">
+                        <h2>👤 Vous</h2>
+                        <div class="score-display">
+                            <span id="playerScore">0</span>
+                        </div>
+                    </div>
+                    <div class="hand" id="playerHand">
+                        <!-- Player's cards will appear here -->
+                    </div>
+                </section>
+
+                <!-- Betting controls -->
+                <div class="betting-controls" id="bettingControls">
+                    <h3>Placez votre mise</h3>
+                    <div class="chip-buttons">
+                        <button class="chip-btn" data-amount="10">10 €</button>
+                        <button class="chip-btn" data-amount="25">25 €</button>
+                        <button class="chip-btn" data-amount="50">50 €</button>
+                        <button class="chip-btn" data-amount="100">100 €</button>
+                    </div>
+                    <div class="bet-actions">
+                        <button class="btn btn-secondary" id="clearBet">Effacer</button>
+                        <button class="btn btn-primary" id="dealBtn">Distribuer</button>
+                    </div>
+                </div>
+
+                <!-- Game controls -->
+                <div class="game-controls" id="gameControls" style="display: none;">
+                    <button class="btn btn-action" id="hitBtn">
+                        <span>🃏 Carte</span>
+                    </button>
+                    <button class="btn btn-action" id="standBtn">
+                        <span>✋ Rester</span>
+                    </button>
+                    <button class="btn btn-action" id="doubleBtn">
+                        <span>💰 Doubler</span>
+                    </button>
+                </div>
+
+                <!-- New game button -->
+                <div class="new-game-controls" id="newGameControls" style="display: none;">
+                    <button class="btn btn-primary btn-large" id="newGameBtn">
+                        Nouvelle partie
+                    </button>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="/Jeu_cartes/script.js"></script>
+</body>
+</html>
