@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce Cart System</title>
+    <link rel="stylesheet" href="/Panier_ecommerce/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🛒 E-Commerce POO</h1>
+            <p class="subtitle">Système de panier avec architecture orientée objet</p>
+        </header>
+
+        <div class="main-layout">
+            <!-- Products Section -->
+            <section class="products-section">
+                <div class="section-header">
+                    <h2>📦 Produits disponibles</h2>
+                    <div class="filters">
+                        <select id="categoryFilter">
+                            <option value="all">Toutes catégories</option>
+                            <option value="electronics">Électronique</option>
+                            <option value="clothing">Vêtements</option>
+                            <option value="food">Alimentation</option>
+                            <option value="books">Livres</option>
+                        </select>
+                        <select id="sortBy">
+                            <option value="name-asc">Nom A-Z</option>
+                            <option value="name-desc">Nom Z-A</option>
+                            <option value="price-asc">Prix croissant</option>
+                            <option value="price-desc">Prix décroissant</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="productsList" class="products-grid">
+                    <!-- Products will be rendered here -->
+                </div>
+            </section>
+
+            <!-- Cart Section -->
+            <aside class="cart-section">
+                <div class="cart-header">
+                    <h2>🛒 Mon Panier</h2>
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+
+                <div id="cartItems" class="cart-items">
+                    <!-- Cart items will be rendered here -->
+                </div>
+
+                <div id="emptyCart" class="empty-cart">
+                    <p>🛍️ Votre panier est vide</p>
+                    <p class="empty-subtitle">Ajoutez des produits pour commencer</p>
+                </div>
+
+                <!-- Cart Summary -->
+                <div class="cart-summary" id="cartSummary" style="display: none;">
+                    <div class="summary-row">
+                        <span>Sous-total HT:</span>
+                        <span id="subtotalHT">0.00 €</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>TVA (20%):</span>
+                        <span id="taxAmount">0.00 €</span>
+                    </div>
+                    <div class="summary-row discount-row" id="discountRow" style="display: none;">
+                        <span>Remise (<span id="discountPercent">0</span>%):</span>
+                        <span id="discountAmount">-0.00 €</span>
+                    </div>
+                    <div class="summary-row shipping-row">
+                        <span>Livraison:</span>
+                        <span id="shippingCost">0.00 €</span>
+                    </div>
+                    <div class="summary-row total-row">
+                        <span>Total TTC:</span>
+                        <span id="totalTTC">0.00 €</span>
+                    </div>
+
+                    <!-- Promo Code -->
+                    <div class="promo-section">
+                        <input 
+                            type="text" 
+                            id="promoCode" 
+                            placeholder="Code promo"
+                        >
+                        <button class="btn btn-secondary" id="applyPromo">
+                            Appliquer
+                        </button>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="cart-actions">
+                        <button class="btn btn-danger" id="clearCart">
+                            Vider le panier
+                        </button>
+                        <button class="btn btn-primary" id="checkout">
+                            Procéder au paiement
+                        </button>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- Modal de confirmation -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <h2 id="modalTitle">Confirmation</h2>
+            <p id="modalMessage"></p>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" id="modalCancel">Annuler</button>
+                <button class="btn btn-primary" id="modalConfirm">Confirmer</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/Panier_ecommerce/script.js"></script>
+</body>
+</html>
