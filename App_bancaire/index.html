@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banking App - Simulation</title>
+    <link rel="stylesheet" href="/App_bancaire/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🏦 MyBank</h1>
+            <p class="subtitle">Application bancaire orientée objet</p>
+        </header>
+
+        <!-- Login Screen -->
+        <div id="loginScreen" class="login-screen">
+            <div class="login-card">
+                <h2>Connexion</h2>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="userId">Identifiant</label>
+                        <input type="text" id="userId" placeholder="user1, user2, ou user3" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pin">Code PIN</label>
+                        <input type="password" id="pin" placeholder="1234" required maxlength="4">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">
+                        Se connecter
+                    </button>
+                </form>
+                <div class="demo-info">
+                    <h4>Comptes de démonstration :</h4>
+                    <p>user1 / PIN: 1234</p>
+                    <p>user2 / PIN: 1234</p>
+                    <p>user3 / PIN: 1234</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main App -->
+        <div id="mainApp" class="main-app" style="display: none;">
+            <!-- User Info Bar -->
+            <div class="user-info-bar">
+                <div class="user-welcome">
+                    <h3 id="userWelcome">Bonjour</h3>
+                    <p id="userEmail"></p>
+                </div>
+                <button class="btn btn-secondary" id="logoutBtn">
+                    🚪 Déconnexion
+                </button>
+            </div>
+
+            <div class="app-layout">
+                <!-- Accounts Section -->
+                <section class="accounts-section">
+                    <h2>💳 Mes Comptes</h2>
+                    <div id="accountsList" class="accounts-list">
+                        <!-- Accounts will be rendered here -->
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="quick-actions">
+                        <h3>Actions rapides</h3>
+                        <div class="action-buttons">
+                            <button class="action-btn" id="depositBtn">
+                                <span class="icon">💰</span>
+                                <span>Dépôt</span>
+                            </button>
+                            <button class="action-btn" id="withdrawBtn">
+                                <span class="icon">💸</span>
+                                <span>Retrait</span>
+                            </button>
+                            <button class="action-btn" id="transferBtn">
+                                <span class="icon">🔄</span>
+                                <span>Virement</span>
+                            </button>
+                            <button class="action-btn" id="requestLoanBtn">
+                                <span class="icon">🏛️</span>
+                                <span>Prêt</span>
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Transactions Section -->
+                <aside class="transactions-section">
+                    <div class="transactions-header">
+                        <h2>📊 Historique</h2>
+                        <select id="accountFilter">
+                            <option value="all">Tous les comptes</option>
+                        </select>
+                    </div>
+
+                    <div class="transactions-stats">
+                        <div class="stat-card">
+                            <span class="stat-label">Total revenus</span>
+                            <span class="stat-value income" id="totalIncome">0.00 €</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-label">Total dépenses</span>
+                            <span class="stat-value expense" id="totalExpense">0.00 €</span>
+                        </div>
+                    </div>
+
+                    <div id="transactionsList" class="transactions-list">
+                        <!-- Transactions will be rendered here -->
+                    </div>
+
+                    <div id="emptyTransactions" class="empty-state">
+                        <p>📭 Aucune transaction</p>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </div>
+
+    <!-- Transaction Modal -->
+    <div id="transactionModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Transaction</h2>
+                <button class="modal-close" id="modalClose">✕</button>
+            </div>
+            <form id="transactionForm">
+                <div class="form-group" id="accountSelectGroup">
+                    <label for="accountSelect">Compte</label>
+                    <select id="accountSelect" required>
+                        <!-- Options will be populated dynamically -->
+                    </select>
+                </div>
+
+                <div class="form-group" id="toAccountGroup" style="display: none;">
+                    <label for="toAccountSelect">Vers le compte</label>
+                    <select id="toAccountSelect">
+                        <!-- Options will be populated dynamically -->
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="amount">Montant (€)</label>
+                    <input type="number" id="amount" step="0.01" min="0.01" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description (optionnel)</label>
+                    <input type="text" id="description" placeholder="Ex: Salaire, Courses...">
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelTransaction">
+                        Annuler
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Confirmer
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="/App_bancaire/main.js"></script>
+</body>
+</html>
