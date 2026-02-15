@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Système de Réservation</title>
+    <link rel="stylesheet" href="/System_reservation/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🎬 CinéBooking</h1>
+            <p class="subtitle">Système de réservation orienté objet</p>
+        </header>
+
+        <!-- Mode Selection -->
+        <div class="mode-selector">
+            <button class="mode-btn active" data-mode="cinema">
+                🎬 Cinéma
+            </button>
+            <button class="mode-btn" data-mode="hotel">
+                🏨 Hôtel
+            </button>
+        </div>
+
+        <!-- Cinema Mode -->
+        <div id="cinemaMode" class="booking-mode">
+            <div class="booking-layout">
+                <!-- Movie Selection -->
+                <section class="selection-section">
+                    <h2>📽️ Sélection</h2>
+                    
+                    <div class="form-group">
+                        <label>Film</label>
+                        <select id="movieSelect">
+                            <option value="">Choisir un film...</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="date" id="cinemaDate">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Séance</label>
+                        <select id="showtimeSelect" disabled>
+                            <option value="">Choisir une séance...</option>
+                        </select>
+                    </div>
+
+                    <div class="selected-seats-info">
+                        <h3>Sièges sélectionnés</h3>
+                        <div id="selectedSeatsDisplay" class="seats-display">
+                            Aucun siège sélectionné
+                        </div>
+                        <div class="price-info">
+                            <span>Total:</span>
+                            <span id="cinemaTotal" class="price">0.00 €</span>
+                        </div>
+                    </div>
+
+                    <div class="customer-info">
+                        <h3>Vos informations</h3>
+                        <input type="text" id="cinemaCustomerName" placeholder="Nom complet" required>
+                        <input type="email" id="cinemaCustomerEmail" placeholder="Email" required>
+                    </div>
+
+                    <button class="btn btn-primary btn-block" id="cinemaBookBtn" disabled>
+                        Réserver
+                    </button>
+
+                    <div class="legend">
+                        <h4>Légende</h4>
+                        <div class="legend-items">
+                            <div class="legend-item">
+                                <span class="seat-demo available"></span>
+                                <span>Disponible</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="seat-demo selected"></span>
+                                <span>Sélectionné</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="seat-demo occupied"></span>
+                                <span>Occupé</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Seating Chart -->
+                <section class="seating-section">
+                    <div class="screen">ÉCRAN</div>
+                    <div id="seatingChart" class="seating-chart">
+                        <p class="empty-message">Veuillez sélectionner un film et une séance</p>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- Hotel Mode -->
+        <div id="hotelMode" class="booking-mode" style="display: none;">
+            <div class="booking-layout">
+                <!-- Room Selection -->
+                <section class="selection-section">
+                    <h2>🏨 Réservation</h2>
+                    
+                    <div class="form-group">
+                        <label>Date d'arrivée</label>
+                        <input type="date" id="checkInDate">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Date de départ</label>
+                        <input type="date" id="checkOutDate">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Type de chambre</label>
+                        <select id="roomTypeFilter">
+                            <option value="all">Tous les types</option>
+                            <option value="single">Chambre Simple</option>
+                            <option value="double">Chambre Double</option>
+                            <option value="suite">Suite</option>
+                        </select>
+                    </div>
+
+                    <button class="btn btn-secondary btn-block" id="searchRoomsBtn">
+                        🔍 Rechercher
+                    </button>
+
+                    <div class="selected-room-info" id="selectedRoomInfo" style="display: none;">
+                        <h3>Chambre sélectionnée</h3>
+                        <div id="selectedRoomDetails"></div>
+                        <div class="price-info">
+                            <div class="price-row">
+                                <span id="hotelNights">0 nuits</span>
+                                <span id="hotelNightPrice">0.00 €/nuit</span>
+                            </div>
+                            <div class="price-row total">
+                                <span>Total:</span>
+                                <span id="hotelTotal" class="price">0.00 €</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="customer-info">
+                        <h3>Vos informations</h3>
+                        <input type="text" id="hotelCustomerName" placeholder="Nom complet" required>
+                        <input type="email" id="hotelCustomerEmail" placeholder="Email" required>
+                        <input type="tel" id="hotelCustomerPhone" placeholder="Téléphone" required>
+                    </div>
+
+                    <button class="btn btn-primary btn-block" id="hotelBookBtn" disabled>
+                        Réserver
+                    </button>
+                </section>
+
+                <!-- Rooms List -->
+                <section class="rooms-section">
+                    <h2>Chambres disponibles</h2>
+                    <div id="roomsList" class="rooms-list">
+                        <p class="empty-message">Veuillez sélectionner vos dates et rechercher</p>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- Bookings Section -->
+        <section class="bookings-section">
+            <div class="bookings-header">
+                <h2>📋 Mes Réservations</h2>
+                <select id="bookingFilter">
+                    <option value="all">Toutes</option>
+                    <option value="cinema">Cinéma</option>
+                    <option value="hotel">Hôtel</option>
+                </select>
+            </div>
+            <div id="bookingsList" class="bookings-list">
+                <p class="empty-message">Aucune réservation</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>✅ Réservation confirmée</h2>
+            </div>
+            <div class="modal-body" id="confirmModalBody">
+                <!-- Booking details will be inserted here -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="confirmModalClose">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/System_reservation/script.js"></script>
+</body>
+</html>
