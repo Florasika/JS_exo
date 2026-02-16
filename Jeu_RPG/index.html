@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RPG Game - POO</title>
+    <link rel="stylesheet" href="/Jeu_RPG/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>⚔️ RPG Adventure</h1>
+            <p class="subtitle">Jeu de rôle orienté objet avec combat tour par tour</p>
+        </header>
+
+        <!-- Character Creation -->
+        <div id="characterCreation" class="character-creation">
+            <div class="creation-card">
+                <h2>Créez votre personnage</h2>
+                
+                <div class="form-group">
+                    <label>Nom du héros</label>
+                    <input type="text" id="heroName" placeholder="Entrez un nom" value="Héros">
+                </div>
+
+                <div class="form-group">
+                    <label>Choisissez votre classe</label>
+                    <div class="class-selection">
+                        <div class="class-card" data-class="warrior">
+                            <div class="class-icon">⚔️</div>
+                            <h3>Guerrier</h3>
+                            <p>HP: 150 | ATK: 20 | DEF: 15</p>
+                            <p class="class-desc">Puissant au corps à corps</p>
+                        </div>
+                        <div class="class-card" data-class="mage">
+                            <div class="class-icon">🔮</div>
+                            <h3>Mage</h3>
+                            <p>HP: 100 | ATK: 30 | DEF: 5</p>
+                            <p class="class-desc">Maître de la magie</p>
+                        </div>
+                        <div class="class-card" data-class="rogue">
+                            <div class="class-icon">🗡️</div>
+                            <h3>Voleur</h3>
+                            <p>HP: 120 | ATK: 25 | DEF: 10</p>
+                            <p class="class-desc">Rapide et agile</p>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary btn-block" id="startGameBtn" disabled>
+                    Commencer l'aventure
+                </button>
+            </div>
+        </div>
+
+        <!-- Game Screen -->
+        <div id="gameScreen" class="game-screen" style="display: none;">
+            <div class="game-layout">
+                <!-- Hero Section -->
+                <section class="hero-section">
+                    <div class="character-panel hero-panel">
+                        <div class="panel-header">
+                            <h2 id="heroNameDisplay">Héros</h2>
+                            <span class="character-level" id="heroLevel">Niv. 1</span>
+                        </div>
+                        
+                        <div class="character-avatar hero-avatar" id="heroAvatar">
+                            ⚔️
+                        </div>
+
+                        <div class="stats-container">
+                            <div class="stat-bar">
+                                <div class="stat-label">
+                                    <span>❤️ HP</span>
+                                    <span id="heroHpText">100/100</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill hp" id="heroHpBar" style="width: 100%"></div>
+                                </div>
+                            </div>
+
+                            <div class="stat-bar">
+                                <div class="stat-label">
+                                    <span>✨ EXP</span>
+                                    <span id="heroExpText">0/100</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill exp" id="heroExpBar" style="width: 0%"></div>
+                                </div>
+                            </div>
+
+                            <div class="stats-grid">
+                                <div class="stat-item">
+                                    <span class="stat-icon">⚔️</span>
+                                    <span>ATK: <strong id="heroAtk">20</strong></span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-icon">🛡️</span>
+                                    <span>DEF: <strong id="heroDef">10</strong></span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-icon">💰</span>
+                                    <span>Or: <strong id="heroGold">0</strong></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="inventory-section">
+                            <h3>🎒 Inventaire</h3>
+                            <div id="inventoryList" class="inventory-list">
+                                <p class="empty-message">Inventaire vide</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Battle Section -->
+                <section class="battle-section">
+                    <div class="battle-log-container">
+                        <h3>📜 Journal de combat</h3>
+                        <div id="battleLog" class="battle-log">
+                            <p class="log-entry system">Bienvenue dans l'arène !</p>
+                        </div>
+                    </div>
+
+                    <div class="enemy-container" id="enemyContainer">
+                        <div class="character-panel enemy-panel">
+                            <div class="panel-header">
+                                <h2 id="enemyName">Ennemi</h2>
+                                <span class="enemy-level" id="enemyLevel">Niv. 1</span>
+                            </div>
+                            
+                            <div class="character-avatar enemy-avatar" id="enemyAvatar">
+                                👹
+                            </div>
+
+                            <div class="stats-container">
+                                <div class="stat-bar">
+                                    <div class="stat-label">
+                                        <span>❤️ HP</span>
+                                        <span id="enemyHpText">50/50</span>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill hp enemy-hp" id="enemyHpBar" style="width: 100%"></div>
+                                    </div>
+                                </div>
+
+                                <div class="stats-grid">
+                                    <div class="stat-item">
+                                        <span class="stat-icon">⚔️</span>
+                                        <span>ATK: <strong id="enemyAtk">15</strong></span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-icon">🛡️</span>
+                                        <span>DEF: <strong id="enemyDef">5</strong></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="actions-container" id="actionsContainer">
+                        <button class="action-btn attack-btn" id="attackBtn">
+                            <span class="action-icon">⚔️</span>
+                            <span>Attaquer</span>
+                        </button>
+                        <button class="action-btn defend-btn" id="defendBtn">
+                            <span class="action-icon">🛡️</span>
+                            <span>Défendre</span>
+                        </button>
+                        <button class="action-btn skill-btn" id="skillBtn">
+                            <span class="action-icon">✨</span>
+                            <span>Compétence</span>
+                        </button>
+                        <button class="action-btn heal-btn" id="healBtn">
+                            <span class="action-icon">❤️</span>
+                            <span>Potion (0)</span>
+                        </button>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Victory/Defeat Screen -->
+            <div id="resultScreen" class="result-screen" style="display: none;">
+                <div class="result-card">
+                    <div class="result-icon" id="resultIcon">🎉</div>
+                    <h2 id="resultTitle">Victoire!</h2>
+                    <p id="resultMessage">Vous avez vaincu l'ennemi!</p>
+                    <div id="resultRewards" class="result-rewards"></div>
+                    <div class="result-actions">
+                        <button class="btn btn-primary" id="nextBattleBtn">Combat suivant</button>
+                        <button class="btn btn-secondary" id="restartBtn">Recommencer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/Jeu_RPG/main.js"></script>
+</body>
+</html>
