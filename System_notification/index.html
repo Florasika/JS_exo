@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notification System - Design Patterns</title>
+    <link rel="stylesheet" href="/System_notification/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🔔 Notification System</h1>
+            <p class="subtitle">Système de notifications avec Design Patterns (Factory, Observer, Singleton)</p>
+        </header>
+
+        <div class="main-layout">
+            <!-- Control Panel -->
+            <section class="control-panel">
+                <div class="panel-card">
+                    <h2>📝 Créer une notification</h2>
+                    
+                    <div class="form-group">
+                        <label>Type de notification</label>
+                        <div class="type-buttons">
+                            <button class="type-btn success-btn" data-type="success">
+                                <span class="btn-icon">✅</span>
+                                <span>Succès</span>
+                            </button>
+                            <button class="type-btn error-btn" data-type="error">
+                                <span class="btn-icon">❌</span>
+                                <span>Erreur</span>
+                            </button>
+                            <button class="type-btn warning-btn" data-type="warning">
+                                <span class="btn-icon">⚠️</span>
+                                <span>Avertissement</span>
+                            </button>
+                            <button class="type-btn info-btn" data-type="info">
+                                <span class="btn-icon">ℹ️</span>
+                                <span>Information</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Titre</label>
+                        <input type="text" id="notifTitle" placeholder="Entrez un titre">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Message</label>
+                        <textarea id="notifMessage" placeholder="Entrez votre message" rows="3"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Position</label>
+                        <select id="notifPosition">
+                            <option value="top-right">Haut Droite</option>
+                            <option value="top-left">Haut Gauche</option>
+                            <option value="bottom-right">Bas Droite</option>
+                            <option value="bottom-left">Bas Gauche</option>
+                            <option value="top-center">Haut Centre</option>
+                            <option value="bottom-center">Bas Centre</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Durée (ms) - 0 pour persistant</label>
+                        <input type="number" id="notifDuration" value="5000" min="0" step="1000">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="notifClosable" checked>
+                            <span>Peut être fermée</span>
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="notifProgress">
+                            <span>Afficher barre de progression</span>
+                        </label>
+                    </div>
+
+                    <button class="btn btn-primary btn-block" id="createNotifBtn">
+                        Créer la notification
+                    </button>
+                </div>
+
+                <div class="panel-card">
+                    <h2>🎯 Actions rapides</h2>
+                    
+                    <button class="action-btn success-action" id="quickSuccess">
+                        ✅ Succès rapide
+                    </button>
+                    <button class="action-btn error-action" id="quickError">
+                        ❌ Erreur rapide
+                    </button>
+                    <button class="action-btn warning-action" id="quickWarning">
+                        ⚠️ Avertissement rapide
+                    </button>
+                    <button class="action-btn info-action" id="quickInfo">
+                        ℹ️ Info rapide
+                    </button>
+                    <button class="action-btn test-action" id="testAll">
+                        🧪 Tester toutes les positions
+                    </button>
+                    <button class="action-btn clear-action" id="clearAll">
+                        🗑️ Tout effacer
+                    </button>
+                </div>
+
+                <div class="panel-card">
+                    <h2>📊 Statistiques</h2>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <span class="stat-label">Total créées</span>
+                            <span class="stat-value" id="statTotal">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Actives</span>
+                            <span class="stat-value" id="statActive">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Succès</span>
+                            <span class="stat-value success" id="statSuccess">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Erreurs</span>
+                            <span class="stat-value error" id="statError">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Avertissements</span>
+                            <span class="stat-value warning" id="statWarning">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Infos</span>
+                            <span class="stat-value info" id="statInfo">0</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Preview Section -->
+            <section class="preview-section">
+                <div class="preview-card">
+                    <h2>👁️ Aperçu des positions</h2>
+                    <div class="preview-grid">
+                        <div class="preview-position" data-position="top-left">
+                            <span class="position-label">Haut Gauche</span>
+                        </div>
+                        <div class="preview-position" data-position="top-center">
+                            <span class="position-label">Haut Centre</span>
+                        </div>
+                        <div class="preview-position" data-position="top-right">
+                            <span class="position-label">Haut Droite</span>
+                        </div>
+                        <div class="preview-position" data-position="bottom-left">
+                            <span class="position-label">Bas Gauche</span>
+                        </div>
+                        <div class="preview-position" data-position="bottom-center">
+                            <span class="position-label">Bas Centre</span>
+                        </div>
+                        <div class="preview-position" data-position="bottom-right">
+                            <span class="position-label">Bas Droite</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="preview-card">
+                    <h2>📜 Historique</h2>
+                    <div id="historyList" class="history-list">
+                        <p class="empty-message">Aucune notification créée</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Notification Containers (will be created dynamically) -->
+    
+    <script src="/System_notification/script.js"></script>
+</body>
+</html>
