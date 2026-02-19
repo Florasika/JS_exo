@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Game Engine - POO</title>
+    <link rel="stylesheet" href="/Moteur_jeu/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🎮 Mini Game Engine</h1>
+            <p class="subtitle">Moteur de jeu orienté objet avec architecture avancée</p>
+        </header>
+
+        <div class="main-layout">
+            <!-- Game Canvas Section -->
+            <section class="game-section">
+                <div class="game-container">
+                    <div class="game-header">
+                        <h2>🎯 Game Canvas</h2>
+                        <div class="game-controls">
+                            <button class="control-btn" id="startBtn">▶️ Start</button>
+                            <button class="control-btn" id="pauseBtn" disabled>⏸️ Pause</button>
+                            <button class="control-btn" id="resetBtn">🔄 Reset</button>
+                        </div>
+                    </div>
+                    
+                    <canvas id="gameCanvas" width="800" height="600"></canvas>
+                    
+                    <div class="game-info">
+                        <div class="info-item">
+                            <span class="info-label">FPS:</span>
+                            <span class="info-value" id="fps">0</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Entities:</span>
+                            <span class="info-value" id="entityCount">0</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Score:</span>
+                            <span class="info-value" id="score">0</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Time:</span>
+                            <span class="info-value" id="gameTime">0s</span>
+                        </div>
+                    </div>
+
+                    <div class="controls-info">
+                        <h3>🎮 Contrôles</h3>
+                        <p><strong>Flèches ←↑→↓</strong> ou <strong>WASD</strong> - Déplacer le joueur</p>
+                        <p><strong>Espace</strong> - Tirer</p>
+                        <p><strong>Clic gauche</strong> - Ajouter un ennemi</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Info Panel -->
+            <aside class="info-panel">
+                <!-- Engine Stats -->
+                <div class="panel-card">
+                    <h3>📊 Engine Stats</h3>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <span class="stat-label">Update Rate</span>
+                            <span class="stat-value" id="updateRate">0ms</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Render Rate</span>
+                            <span class="stat-value" id="renderRate">0ms</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Active Scenes</span>
+                            <span class="stat-value" id="sceneCount">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Collisions</span>
+                            <span class="stat-value" id="collisionCount">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Entity List -->
+                <div class="panel-card">
+                    <h3>📦 Entities</h3>
+                    <div id="entityList" class="entity-list">
+                        <p class="empty-message">Aucune entité</p>
+                    </div>
+                </div>
+
+                <!-- Event Log -->
+                <div class="panel-card">
+                    <h3>📝 Event Log</h3>
+                    <div id="eventLog" class="event-log">
+                        <p class="log-entry system">Engine initialisé</p>
+                    </div>
+                </div>
+
+                <!-- Architecture -->
+                <div class="panel-card">
+                    <h3>🏗️ Architecture</h3>
+                    <div class="architecture-info">
+                        <p><strong>Classes principales:</strong></p>
+                        <ul>
+                            <li><code>Game</code> - Moteur principal</li>
+                            <li><code>Scene</code> - Gestion de scène</li>
+                            <li><code>Entity</code> - Entité de base</li>
+                            <li><code>Player</code> - Joueur (héritage)</li>
+                            <li><code>Enemy</code> - Ennemi (héritage)</li>
+                            <li><code>Projectile</code> - Projectile</li>
+                            <li><code>Vector2D</code> - Vecteur 2D</li>
+                            <li><code>CollisionSystem</code> - Collisions</li>
+                        </ul>
+                        <p><strong>Patterns:</strong></p>
+                        <ul>
+                            <li>Game Loop (Update/Render)</li>
+                            <li>Component System</li>
+                            <li>Event System</li>
+                            <li>Object Pool</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Debug Options -->
+                <div class="panel-card">
+                    <h3>🔧 Debug Options</h3>
+                    <div class="debug-options">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="showColliders" checked>
+                            <span>Afficher les colliders</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="showVelocity">
+                            <span>Afficher les vecteurs de vitesse</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="showFPS" checked>
+                            <span>Afficher le FPS</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="showGrid">
+                            <span>Afficher la grille</span>
+                        </label>
+                    </div>
+                    <div class="debug-actions">
+                        <button class="btn btn-secondary" id="spawnEnemyBtn">➕ Spawn Enemy</button>
+                        <button class="btn btn-secondary" id="clearEnemiesBtn">🗑️ Clear Enemies</button>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <script src="/Moteur_jeu/script.js"></script>
+</body>
+</html>
