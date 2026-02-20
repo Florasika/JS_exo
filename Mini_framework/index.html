@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MiniUI Framework - POO</title>
+    <link rel="stylesheet" href="/Mini_framework/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>⚛️ MiniUI Framework</h1>
+            <p class="subtitle">Framework UI orienté objet avec Virtual DOM et State Management</p>
+        </header>
+
+        <div class="main-layout">
+            <!-- Demo Section -->
+            <section class="demo-section">
+                <!-- Counter Demo -->
+                <div class="demo-card">
+                    <h2>🔢 Counter Component</h2>
+                    <div id="counterApp"></div>
+                </div>
+
+                <!-- Todo List Demo -->
+                <div class="demo-card">
+                    <h2>✅ Todo List Component</h2>
+                    <div id="todoApp"></div>
+                </div>
+
+                <!-- Form Demo -->
+                <div class="demo-card">
+                    <h2>📝 Form Component</h2>
+                    <div id="formApp"></div>
+                </div>
+
+                <!-- Timer Demo -->
+                <div class="demo-card">
+                    <h2>⏱️ Timer Component</h2>
+                    <div id="timerApp"></div>
+                </div>
+            </section>
+
+            <!-- Info Panel -->
+            <aside class="info-panel">
+                <!-- Framework Info -->
+                <div class="panel-card">
+                    <h3>ℹ️ Framework Info</h3>
+                    <div class="framework-stats">
+                        <div class="stat-item">
+                            <span class="stat-label">Components:</span>
+                            <span class="stat-value" id="componentCount">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Renders:</span>
+                            <span class="stat-value" id="renderCount">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">State Updates:</span>
+                            <span class="stat-value" id="stateUpdateCount">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Virtual DOM Tree -->
+                <div class="panel-card">
+                    <h3>🌳 Virtual DOM Tree</h3>
+                    <div id="vdomTree" class="vdom-tree">
+                        <p class="empty-message">Le Virtual DOM apparaîtra ici</p>
+                    </div>
+                </div>
+
+                <!-- Component Lifecycle -->
+                <div class="panel-card">
+                    <h3>♻️ Lifecycle Log</h3>
+                    <div id="lifecycleLog" class="lifecycle-log">
+                        <p class="log-entry system">Framework initialisé</p>
+                    </div>
+                </div>
+
+                <!-- Architecture -->
+                <div class="panel-card">
+                    <h3>🏗️ Architecture</h3>
+                    <div class="architecture-info">
+                        <p><strong>Classes principales:</strong></p>
+                        <ul>
+                            <li><code>VNode</code> - Nœud Virtual DOM</li>
+                            <li><code>Component</code> - Composant de base</li>
+                            <li><code>State</code> - Gestion d'état</li>
+                            <li><code>Renderer</code> - Moteur de rendu</li>
+                            <li><code>Differ</code> - Diff algorithm</li>
+                        </ul>
+                        <p><strong>Concepts:</strong></p>
+                        <ul>
+                            <li>Virtual DOM</li>
+                            <li>Reactive State</li>
+                            <li>Component Lifecycle</li>
+                            <li>Reconciliation</li>
+                            <li>Event Handling</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Code Example -->
+                <div class="panel-card">
+                    <h3>💻 Example Usage</h3>
+                    <pre class="code-example"><code>class Counter extends Component {
+  constructor() {
+    super();
+    this.state = new State({ count: 0 });
+  }
+
+  increment() {
+    this.state.setState({
+      count: this.state.get('count') + 1
+    });
+  }
+
+  render() {
+    return h('div', {},
+      h('h3', {}, `Count: ${this.state.get('count')}`),
+      h('button', {
+        onClick: () => this.increment()
+      }, 'Increment')
+    );
+  }
+}
+
+// Mount
+const app = new Counter();
+app.mount('#app');</code></pre>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <script src="/Mini_framework/main.js"></script>
+</body>
+</html>
