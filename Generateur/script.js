@@ -1,5 +1,5 @@
 // ========================================
-// ÉTAPE 1: VARIABLES GLOBALES
+// VARIABLES GLOBALES
 // ========================================
 
 let invoiceItemCount = 0;
@@ -13,8 +13,11 @@ let cvPhotoBase64 = null;
 let signatureBase64 = null;
 
 // Configuration CV
-let cvTemplate = 'modern';
 let cvPhotoPosition = 'left';
+
+// ========================================
+// INITIALISATION
+// ========================================
 
 document.addEventListener('DOMContentLoaded', () => {
     console.log('Initialisation du générateur de PDF...');
@@ -43,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ========================================
-// ÉTAPE 2: SETUP TABS
+// SETUP TABS
 // ========================================
 
 function setupTabs() {
@@ -64,7 +67,7 @@ function setupTabs() {
 }
 
 // ========================================
-// ÉTAPE 3: COLOR PICKERS
+// COLOR PICKERS
 // ========================================
 
 function setupColorPickers() {
@@ -102,7 +105,7 @@ function setupColorPickers() {
 }
 
 // ========================================
-// ÉTAPE 4: FILE UPLOADS
+// FILE UPLOADS
 // ========================================
 
 function setupFileUploads() {
@@ -211,48 +214,7 @@ function toggleSignatureUpload() {
 }
 
 // ========================================
-// ÉTAPE 5: CV TEMPLATES & OPTIONS
-// ========================================
-
-function selectCVTemplate(template) {
-    cvTemplate = template;
-    
-    document.querySelectorAll('.template-option').forEach(opt => {
-        opt.classList.remove('active');
-    });
-    document.querySelector(`[data-template="${template}"]`).classList.add('active');
-    
-    document.getElementById('cv-preview-content').setAttribute('data-template', template);
-    updateCVPreview();
-}
-
-function togglePhotoOptions() {
-    const includePhoto = document.getElementById('cv-include-photo').checked;
-    const photoOptions = document.getElementById('photo-options');
-    
-    if (includePhoto) {
-        photoOptions.style.display = 'block';
-    } else {
-        photoOptions.style.display = 'none';
-        document.getElementById('cv-photo-container').style.display = 'none';
-    }
-    
-    updateCVPreview();
-}
-
-function selectPhotoPosition(position) {
-    cvPhotoPosition = position;
-    
-    document.querySelectorAll('.position-btn').forEach(btn => {
-        btn.classList.remove('active');
-    });
-    document.querySelector(`[data-position="${position}"]`).classList.add('active');
-    
-    updateCVPreview();
-}
-
-// ========================================
-// ÉTAPE 6: GESTION DES ARTICLES (FACTURE)
+// FACTURE - GESTION ARTICLES
 // ========================================
 
 function addInvoiceItem() {
@@ -396,7 +358,7 @@ function calculateInvoiceTotals() {
 }
 
 // ========================================
-// ÉTAPE 7: PRÉVISUALISATION FACTURE
+// FACTURE - PRÉVISUALISATION
 // ========================================
 
 function setupInvoiceListeners() {
@@ -526,7 +488,7 @@ function updateInvoicePreview() {
 }
 
 // ========================================
-// ÉTAPE 8: GÉNÉRATION PDF FACTURE
+// FACTURE - GÉNÉRATION PDF
 // ========================================
 
 function generateInvoicePDF() {
@@ -561,58 +523,62 @@ function generateInvoicePDF() {
     const items = getInvoiceItems();
     const totals = calculateInvoiceTotals();
     
-    // HEADER avec couleur personnalisée
-    doc.setFillColor(rgb.r, rgb.g, rgb.b);
-    doc.rect(0, 0, 210, 50, 'F');
+    let yPos = 20;
     
-    let headerY = 15;
+    // HEADER SANS FOND COLORÉ - comme la prévisualisation
     
-    // Logo si présent
+    // Logo si présent (à gauche)
     if (companyLogoBase64) {
         try {
-            doc.addImage(companyLogoBase64, 'PNG', 15, 10, 30, 30);
-            headerY = 15;
+            doc.addImage(companyLogoBase64, 'PNG', 15, 15, 30, 30);
         } catch (e) {
             console.error('Erreur logo:', e);
         }
     }
     
-    // Entreprise avec couleur
+    // Nom de l'entreprise avec couleur (à gauche, après le logo)
     doc.setTextColor(rgb.r, rgb.g, rgb.b);
-    doc.setFontSize(20);
+    doc.setFontSize(18);
     doc.setFont(undefined, 'bold');
-    doc.text(companyName, companyLogoBase64 ? 50 : 15, headerY);
+    doc.text(companyName, companyLogoBase64 ? 50 : 15, 22);
     
-    doc.setTextColor(255, 255, 255);
-    doc.setFontSize(10);
+    // Informations entreprise (noir)
+    doc.setTextColor(0, 0, 0);
+    doc.setFontSize(9);
     doc.setFont(undefined, 'normal');
-    doc.text(companyAddress, companyLogoBase64 ? 50 : 15, headerY + 7);
-    doc.text(`${companyZip} ${companyCity}`, companyLogoBase64 ? 50 : 15, headerY + 12);
-    doc.text(companyEmail, companyLogoBase64 ? 50 : 15, headerY + 17);
-    doc.text(companyPhone, companyLogoBase64 ? 50 : 15, headerY + 22);
+    doc.text(companyAddress, companyLogoBase64 ? 50 : 15, 28);
+    doc.text(`${companyZip} ${companyCity}`, companyLogoBase64 ? 50 : 15, 33);
     
-    // Titre FACTURE
+    // Titre FACTURE à droite
     doc.setFontSize(24);
     doc.setFont(undefined, 'bold');
-    doc.text('FACTURE', 210 - 15, 20, { align: 'right' });
+    doc.text('FACTURE', 195, 22, { align: 'right' });
     
-    doc.setFontSize(11);
+    // Numéro et date à droite
+    doc.setFontSize(10);
     doc.setFont(undefined, 'normal');
-    doc.text(`N° ${invoiceNumber}`, 210 - 15, 28, { align: 'right' });
-    doc.text(`Date: ${new Date(invoiceDate).toLocaleDateString('fr-FR')}`, 210 - 15, 35, { align: 'right' });
+    doc.text(`N° ${invoiceNumber}`, 195, 30, { align: 'right' });
+    doc.text(`Date: ${new Date(invoiceDate).toLocaleDateString('fr-FR')}`, 195, 36, { align: 'right' });
     
-    doc.setTextColor(0, 0, 0);
+    // Ligne de séparation colorée
+    doc.setDrawColor(rgb.r, rgb.g, rgb.b);
+    doc.setLineWidth(1);
+    doc.line(15, 50, 195, 50);
     
-    let yPos = 60;
+    yPos = 60;
     
     // OBJET ET CLIENT SUR MÊME LIGNE
-    doc.setFontSize(11);
+    doc.setTextColor(0, 0, 0);
+    doc.setFontSize(10);
     doc.setFont(undefined, 'bold');
+    
+    // Objet (à gauche)
     doc.text('Objet:', 15, yPos);
     doc.setFont(undefined, 'normal');
     const splitSubject = doc.splitTextToSize(invoiceSubject, 75);
     doc.text(splitSubject, 15, yPos + 5);
     
+    // Client (à droite)
     doc.setFont(undefined, 'bold');
     doc.text('Client:', 110, yPos);
     doc.setFont(undefined, 'normal');
@@ -623,7 +589,7 @@ function generateInvoicePDF() {
     yPos += Math.max(splitSubject.length * 5, 20) + 10;
     
     // SIRET
-    doc.setFontSize(9);
+    doc.setFontSize(8);
     doc.setTextColor(100, 100, 100);
     doc.text(`SIRET: ${companySiret}`, 15, yPos);
     doc.setTextColor(0, 0, 0);
@@ -648,11 +614,11 @@ function generateInvoicePDF() {
             fillColor: [rgb.r, rgb.g, rgb.b],
             textColor: 255,
             fontStyle: 'bold',
-            fontSize: 11
+            fontSize: 10
         },
         styles: {
-            fontSize: 10,
-            cellPadding: 5
+            fontSize: 9,
+            cellPadding: 4
         },
         columnStyles: {
             0: { cellWidth: 30 },
@@ -666,19 +632,20 @@ function generateInvoicePDF() {
     // TOTAUX
     const finalY = doc.lastAutoTable.finalY + 10;
     
-    doc.setFontSize(11);
+    doc.setFontSize(10);
+    doc.setTextColor(0, 0, 0);
     doc.text('Total HT:', 140, finalY);
     doc.text(`${totals.totalHT}€`, 190, finalY, { align: 'right' });
     
-    doc.text('TVA (20%):', 140, finalY + 7);
-    doc.text(`${totals.tva}€`, 190, finalY + 7, { align: 'right' });
+    doc.text('TVA (20%):', 140, finalY + 6);
+    doc.text(`${totals.tva}€`, 190, finalY + 6, { align: 'right' });
     
     // Total TTC avec couleur
     doc.setFont(undefined, 'bold');
-    doc.setFontSize(13);
+    doc.setFontSize(12);
     doc.setTextColor(rgb.r, rgb.g, rgb.b);
-    doc.text('Total TTC:', 140, finalY + 15);
-    doc.text(`${totals.totalTTC}€`, 190, finalY + 15, { align: 'right' });
+    doc.text('Total TTC:', 140, finalY + 14);
+    doc.text(`${totals.totalTTC}€`, 190, finalY + 14, { align: 'right' });
     doc.setTextColor(0, 0, 0);
     
     // NOTES
@@ -687,7 +654,7 @@ function generateInvoicePDF() {
         doc.setFontSize(9);
         doc.setTextColor(100, 100, 100);
         
-        const notesY = finalY + 30;
+        const notesY = finalY + 28;
         doc.text('Notes:', 15, notesY);
         
         const splitNotes = doc.splitTextToSize(invoiceNotes, 180);
@@ -702,6 +669,7 @@ function generateInvoicePDF() {
         
         doc.setFontSize(10);
         doc.setTextColor(0, 0, 0);
+        doc.setFont(undefined, 'normal');
         doc.text(`A ${invoiceLocation}, le ${formattedDate}`, 140, signatureY);
         
         if (signatureBase64) {
@@ -710,6 +678,9 @@ function generateInvoicePDF() {
             } catch (e) {
                 console.error('Erreur signature:', e);
             }
+        } else {
+            doc.setFont(undefined, 'italic');
+            doc.text('Signature', 140, signatureY + 15);
         }
     }
     
@@ -731,7 +702,7 @@ function generateInvoicePDF() {
 }
 
 // ========================================
-// ÉTAPE 9: GESTION CV - EXPÉRIENCES
+// CV - GESTION EXPÉRIENCES
 // ========================================
 
 function addExperience() {
@@ -743,10 +714,10 @@ function addExperience() {
     div.id = `experience-${experienceCount}`;
     
     const defaultData = experienceCount === 1 ? {
-        title: 'Développeur Full Stack',
-        company: 'TechCorp',
-        period: '2020 - Présent',
-        description: 'Développement d\'applications web avec React et Node.js. Gestion de projets en méthode Agile.'
+        title: 'Développeur Full Stack Senior',
+        company: 'TechCorp International',
+        period: 'Jan 2020 - Présent',
+        description: '• Développement et maintenance d\'applications web scalables avec React et Node.js\n• Collaboration avec une équipe de 8 développeurs en méthodologie Agile\n• Réduction du temps de chargement de 40% grâce à l\'optimisation du code\n• Mise en place de tests automatisés augmentant la couverture de code à 85%'
     } : {
         title: '',
         company: '',
@@ -762,30 +733,34 @@ function addExperience() {
             </button>
         </div>
         <div class="form-group">
-            <label>Poste</label>
+            <label>Titre du poste</label>
             <input type="text" class="form-input cv-exp-title" 
                    value="${defaultData.title}"
-                   data-exp-id="${experienceCount}">
+                   data-exp-id="${experienceCount}"
+                   placeholder="Ex: Développeur Full Stack Senior">
         </div>
         <div class="form-row">
             <div class="form-group">
                 <label>Entreprise</label>
                 <input type="text" class="form-input cv-exp-company" 
                        value="${defaultData.company}"
-                       data-exp-id="${experienceCount}">
+                       data-exp-id="${experienceCount}"
+                       placeholder="Nom de l'entreprise">
             </div>
             <div class="form-group">
                 <label>Période</label>
                 <input type="text" class="form-input cv-exp-period" 
                        value="${defaultData.period}"
-                       placeholder="2020 - 2023"
+                       placeholder="Jan 2020 - Présent"
                        data-exp-id="${experienceCount}">
             </div>
         </div>
         <div class="form-group">
-            <label>Description</label>
-            <textarea class="form-input cv-exp-description" rows="3" 
-                      data-exp-id="${experienceCount}">${defaultData.description}</textarea>
+            <label>Missions et réalisations</label>
+            <textarea class="form-input cv-exp-description" rows="5" 
+                      data-exp-id="${experienceCount}"
+                      placeholder="• Développement de fonctionnalité X qui a permis Y&#10;• Gestion d'une équipe de Z personnes&#10;• Amélioration des performances de 30%">${defaultData.description}</textarea>
+            <div class="help-text">Utilisez des bullet points (•) et quantifiez vos résultats</div>
         </div>
     `;
     
@@ -807,8 +782,31 @@ function removeExperience(id) {
     }
 }
 
+function getCVExperiences() {
+    const experiences = [];
+    const titles = document.querySelectorAll('.cv-exp-title');
+    
+    titles.forEach(title => {
+        const expId = title.dataset.expId;
+        const company = document.querySelector(`.cv-exp-company[data-exp-id="${expId}"]`);
+        const period = document.querySelector(`.cv-exp-period[data-exp-id="${expId}"]`);
+        const description = document.querySelector(`.cv-exp-description[data-exp-id="${expId}"]`);
+        
+        if (title.value) {
+            experiences.push({
+                title: title.value,
+                company: company?.value || '',
+                period: period?.value || '',
+                description: description?.value || ''
+            });
+        }
+    });
+    
+    return experiences;
+}
+
 // ========================================
-// ÉTAPE 10: GESTION CV - FORMATION
+// CV - GESTION FORMATION
 // ========================================
 
 function addEducation() {
@@ -820,10 +818,10 @@ function addEducation() {
     div.id = `education-${educationCount}`;
     
     const defaultData = educationCount === 1 ? {
-        degree: 'Master Informatique',
-        school: 'Université Paris',
+        degree: 'Master en Informatique',
+        school: 'Université Paris-Saclay',
         period: '2015 - 2017',
-        description: 'Spécialisation en développement web et bases de données'
+        description: 'Spécialisation en développement web et architecture logicielle'
     } : {
         degree: '',
         school: '',
@@ -842,14 +840,16 @@ function addEducation() {
             <label>Diplôme</label>
             <input type="text" class="form-input cv-edu-degree" 
                    value="${defaultData.degree}"
-                   data-edu-id="${educationCount}">
+                   data-edu-id="${educationCount}"
+                   placeholder="Ex: Master en Informatique">
         </div>
         <div class="form-row">
             <div class="form-group">
                 <label>École / Université</label>
                 <input type="text" class="form-input cv-edu-school" 
                        value="${defaultData.school}"
-                       data-edu-id="${educationCount}">
+                       data-edu-id="${educationCount}"
+                       placeholder="Nom de l'établissement">
             </div>
             <div class="form-group">
                 <label>Période</label>
@@ -862,7 +862,8 @@ function addEducation() {
         <div class="form-group">
             <label>Description (optionnel)</label>
             <textarea class="form-input cv-edu-description" rows="2" 
-                      data-edu-id="${educationCount}">${defaultData.description}</textarea>
+                      data-edu-id="${educationCount}"
+                      placeholder="Spécialisation, projets importants, mentions...">${defaultData.description}</textarea>
         </div>
     `;
     
@@ -884,8 +885,31 @@ function removeEducation(id) {
     }
 }
 
+function getCVEducation() {
+    const education = [];
+    const degrees = document.querySelectorAll('.cv-edu-degree');
+    
+    degrees.forEach(degree => {
+        const eduId = degree.dataset.eduId;
+        const school = document.querySelector(`.cv-edu-school[data-edu-id="${eduId}"]`);
+        const period = document.querySelector(`.cv-edu-period[data-edu-id="${eduId}"]`);
+        const description = document.querySelector(`.cv-edu-description[data-edu-id="${eduId}"]`);
+        
+        if (degree.value) {
+            education.push({
+                degree: degree.value,
+                school: school?.value || '',
+                period: period?.value || '',
+                description: description?.value || ''
+            });
+        }
+    });
+    
+    return education;
+}
+
 // ========================================
-// ÉTAPE 11: GESTION CV - PROJETS
+// CV - GESTION PROJETS
 // ========================================
 
 function addProject() {
@@ -897,15 +921,19 @@ function addProject() {
     div.id = `project-${projectCount}`;
     
     const defaultData = projectCount === 1 ? {
-        title: 'Application de gestion de tâches',
+        title: 'Plateforme E-commerce Multivendeurs',
         period: '2023',
-        description: 'Application web full-stack avec React et Node.js permettant la gestion collaborative de projets.',
-        technologies: 'React, Node.js, MongoDB, Express'
+        context: 'Projet Freelance',
+        technologies: 'React, Node.js, MongoDB, Stripe, AWS S3',
+        description: 'Développement d\'une plateforme e-commerce complète permettant à plusieurs vendeurs de gérer leurs boutiques en ligne.',
+        achievements: '• Architecture microservices avec 5 services indépendants\n• Intégration de paiements sécurisés via Stripe API\n• Système de gestion des stocks en temps réel avec WebSocket\n• Panel d\'administration avec analytics et graphiques\n• Performance: temps de chargement < 2s, support de 10k+ utilisateurs\n• Acquisition de 1000+ utilisateurs actifs en 3 mois'
     } : {
         title: '',
         period: '',
+        context: '',
+        technologies: '',
         description: '',
-        technologies: ''
+        achievements: ''
     };
     
     div.innerHTML = `
@@ -919,26 +947,45 @@ function addProject() {
             <label>Nom du projet</label>
             <input type="text" class="form-input cv-project-title" 
                    value="${defaultData.title}"
-                   data-project-id="${projectCount}">
+                   data-project-id="${projectCount}"
+                   placeholder="Ex: Application mobile de livraison">
         </div>
-        <div class="form-group">
-            <label>Période</label>
-            <input type="text" class="form-input cv-project-period" 
-                   value="${defaultData.period}"
-                   placeholder="2023"
-                   data-project-id="${projectCount}">
-        </div>
-        <div class="form-group">
-            <label>Description</label>
-            <textarea class="form-input cv-project-description" rows="3" 
-                      data-project-id="${projectCount}">${defaultData.description}</textarea>
+        <div class="form-row">
+            <div class="form-group">
+                <label>Période</label>
+                <input type="text" class="form-input cv-project-period" 
+                       value="${defaultData.period}"
+                       placeholder="2023 ou Jan 2023 - Mars 2023"
+                       data-project-id="${projectCount}">
+            </div>
+            <div class="form-group">
+                <label>Contexte</label>
+                <input type="text" class="form-input cv-project-context" 
+                       value="${defaultData.context}"
+                       placeholder="Personnel / École / Freelance / Entreprise"
+                       data-project-id="${projectCount}">
+            </div>
         </div>
         <div class="form-group">
             <label>Technologies utilisées</label>
             <input type="text" class="form-input cv-project-technologies" 
                    value="${defaultData.technologies}"
-                   placeholder="React, Node.js, MongoDB"
+                   placeholder="React, Node.js, MongoDB, Docker, AWS"
                    data-project-id="${projectCount}">
+            <div class="help-text">Listez les technologies clés séparées par des virgules</div>
+        </div>
+        <div class="form-group">
+            <label>Description du projet</label>
+            <textarea class="form-input cv-project-description" rows="2" 
+                      data-project-id="${projectCount}"
+                      placeholder="Décrivez brièvement l'objectif et le contexte du projet">${defaultData.description}</textarea>
+        </div>
+        <div class="form-group">
+            <label>Réalisations & Résultats clés</label>
+            <textarea class="form-input cv-project-achievements" rows="5" 
+                      data-project-id="${projectCount}"
+                      placeholder="• Développement de fonctionnalité X qui a permis Y&#10;• Optimisation des performances (+50% de vitesse)&#10;• Mise en place de tests automatisés (95% de couverture)&#10;• Déploiement sur AWS avec CI/CD&#10;• 1000+ utilisateurs en 3 mois">${defaultData.achievements}</textarea>
+            <div class="help-text">Commencez chaque ligne par •. Quantifiez les résultats (nombres, pourcentages, délais).</div>
         </div>
     `;
     
@@ -967,15 +1014,19 @@ function getCVProjects() {
     titles.forEach(title => {
         const projectId = title.dataset.projectId;
         const period = document.querySelector(`.cv-project-period[data-project-id="${projectId}"]`);
-        const description = document.querySelector(`.cv-project-description[data-project-id="${projectId}"]`);
+        const context = document.querySelector(`.cv-project-context[data-project-id="${projectId}"]`);
         const technologies = document.querySelector(`.cv-project-technologies[data-project-id="${projectId}"]`);
+        const description = document.querySelector(`.cv-project-description[data-project-id="${projectId}"]`);
+        const achievements = document.querySelector(`.cv-project-achievements[data-project-id="${projectId}"]`);
         
         if (title.value) {
             projects.push({
                 title: title.value,
                 period: period?.value || '',
+                context: context?.value || '',
+                technologies: technologies?.value || '',
                 description: description?.value || '',
-                technologies: technologies?.value || ''
+                achievements: achievements?.value || ''
             });
         }
     });
@@ -984,13 +1035,16 @@ function getCVProjects() {
 }
 
 // ========================================
-// ÉTAPE 12: PRÉVISUALISATION CV
+// CV - SETUP LISTENERS
 // ========================================
 
 function setupCVListeners() {
     const fields = [
         'cv-name', 'cv-title', 'cv-email', 'cv-phone', 'cv-address',
-        'cv-linkedin', 'cv-summary', 'cv-skills', 'cv-languages', 'cv-font'
+        'cv-linkedin', 'cv-website', 'cv-summary', 
+        'cv-skills-programming', 'cv-skills-frameworks', 
+        'cv-skills-tools', 'cv-skills-methodologies',
+        'cv-languages', 'cv-certifications', 'cv-font'
     ];
     
     fields.forEach(fieldId => {
@@ -1006,22 +1060,35 @@ function setupCVListeners() {
     updateCVPreview();
 }
 
+// ========================================
+// CV - PRÉVISUALISATION
+// ========================================
+
 function updateCVPreview() {
     const color = document.getElementById('cv-color').value;
     
     // Appliquer la couleur au nom
     const cvName = document.getElementById('preview-cv-name');
-    cvName.style.color = color;
+    if (cvName) {
+        cvName.style.color = color;
+    }
     
-    // Appliquer la couleur au header
-    const cvHeader = document.getElementById('cv-preview-header');
-    cvHeader.style.borderBottomColor = color;
+    // Appliquer la couleur au header border
+    const header = document.querySelector('.cv-ats-header');
+    if (header) {
+        header.style.borderBottomColor = color;
+    }
     
     // Appliquer la couleur aux titres de sections
-    const sections = document.querySelectorAll('#cv-preview .cv-section h4');
-    sections.forEach(h4 => {
-        h4.style.color = color;
-        h4.style.borderBottomColor = color;
+    const sections = document.querySelectorAll('.cv-ats-section-title');
+    sections.forEach(title => {
+        title.style.color = color;
+    });
+    
+    // Appliquer la couleur aux catégories de compétences
+    const skillCategories = document.querySelectorAll('.cv-ats-skill-category strong');
+    skillCategories.forEach(cat => {
+        cat.style.color = color;
     });
     
     // Photo
@@ -1029,12 +1096,10 @@ function updateCVPreview() {
     const photoContainer = document.getElementById('cv-photo-container');
     
     if (includePhoto && cvPhotoBase64) {
-        photoContainer.innerHTML = `<img src="${cvPhotoBase64}" alt="Photo" class="cv-photo">`;
+        photoContainer.innerHTML = `<img src="${cvPhotoBase64}" alt="Photo">`;
         photoContainer.style.display = 'block';
-        photoContainer.className = `cv-photo-container cv-photo-${cvPhotoPosition}`;
         
-        // Appliquer la couleur à la bordure de la photo
-        const photoImg = photoContainer.querySelector('.cv-photo');
+        const photoImg = photoContainer.querySelector('img');
         if (photoImg) {
             photoImg.style.borderColor = color;
         }
@@ -1049,142 +1114,215 @@ function updateCVPreview() {
     const email = document.getElementById('cv-email').value;
     const phone = document.getElementById('cv-phone').value;
     const address = document.getElementById('cv-address').value;
+    const linkedin = document.getElementById('cv-linkedin').value;
+    const website = document.getElementById('cv-website').value;
     
-    cvName.textContent = name;
-    document.getElementById('preview-cv-title').textContent = title;
-    document.getElementById('preview-cv-contact').textContent = 
-        `${email} | ${phone} | ${address}`;
+    if (cvName) cvName.textContent = name;
+    
+    const titleEl = document.getElementById('preview-cv-title');
+    if (titleEl) titleEl.textContent = title;
+    
+    const emailEl = document.getElementById('preview-cv-email');
+    if (emailEl) emailEl.textContent = email;
+    
+    const phoneEl = document.getElementById('preview-cv-phone');
+    if (phoneEl) phoneEl.textContent = phone;
+    
+    const addressEl = document.getElementById('preview-cv-address');
+    if (addressEl) addressEl.textContent = address;
+    
+    const linkedinEl = document.getElementById('preview-cv-linkedin');
+    if (linkedinEl) linkedinEl.textContent = linkedin;
+    
+    const websiteEl = document.getElementById('preview-cv-website');
+    if (websiteEl) {
+        if (website) {
+            websiteEl.textContent = ' | ' + website;
+            websiteEl.style.display = 'inline';
+        } else {
+            websiteEl.style.display = 'none';
+        }
+    }
     
     // Résumé
     const summary = document.getElementById('cv-summary').value;
-    document.getElementById('preview-cv-summary').textContent = summary;
+    const summaryEl = document.getElementById('preview-cv-summary');
+    if (summaryEl) summaryEl.textContent = summary;
     
     // Expériences
     const experiences = getCVExperiences();
     const expContainer = document.getElementById('preview-cv-experiences');
-    expContainer.innerHTML = '';
-    
-    experiences.forEach(exp => {
-        const div = document.createElement('div');
-        div.className = 'cv-experience-item';
-        div.innerHTML = `
-            <h5>${exp.title}</h5>
-            <p class="cv-meta">${exp.company} | ${exp.period}</p>
-            <p>${exp.description}</p>
-        `;
-        expContainer.appendChild(div);
-    });
+    if (expContainer) {
+        expContainer.innerHTML = '';
+        
+        experiences.forEach(exp => {
+            const div = document.createElement('div');
+            div.className = 'cv-ats-item';
+            div.innerHTML = `
+                <div class="cv-ats-item-header">
+                    <span class="cv-ats-item-title">${exp.title}</span>
+                    <span class="cv-ats-item-period">${exp.period}</span>
+                </div>
+                <div class="cv-ats-item-subtitle">${exp.company}</div>
+                <div class="cv-ats-item-description">${exp.description.replace(/\n/g, '<br>')}</div>
+            `;
+            expContainer.appendChild(div);
+        });
+    }
     
     // Formation
     const education = getCVEducation();
     const eduContainer = document.getElementById('preview-cv-education');
-    eduContainer.innerHTML = '';
-    
-    education.forEach(edu => {
-        const div = document.createElement('div');
-        div.className = 'cv-education-item';
-        div.innerHTML = `
-            <h5>${edu.degree}</h5>
-            <p class="cv-meta">${edu.school} | ${edu.period}</p>
-            ${edu.description ? `<p>${edu.description}</p>` : ''}
-        `;
-        eduContainer.appendChild(div);
-    });
+    if (eduContainer) {
+        eduContainer.innerHTML = '';
+        
+        education.forEach(edu => {
+            const div = document.createElement('div');
+            div.className = 'cv-ats-item';
+            div.innerHTML = `
+                <div class="cv-ats-item-header">
+                    <span class="cv-ats-item-title">${edu.degree}</span>
+                    <span class="cv-ats-item-period">${edu.period}</span>
+                </div>
+                <div class="cv-ats-item-subtitle">${edu.school}</div>
+                ${edu.description ? `<div class="cv-ats-item-description">${edu.description}</div>` : ''}
+            `;
+            eduContainer.appendChild(div);
+        });
+    }
     
     // Projets
     const projects = getCVProjects();
     const projectsContainer = document.getElementById('preview-cv-projects');
     const projectsSection = document.getElementById('cv-projects-section');
     
-    if (projects.length > 0) {
-        projectsContainer.innerHTML = '';
-        projects.forEach(project => {
-            const div = document.createElement('div');
-            div.className = 'cv-project-item';
-            div.innerHTML = `
-                <h5>${project.title}</h5>
-                <p class="cv-meta">${project.period} | ${project.technologies}</p>
-                <p>${project.description}</p>
-            `;
-            projectsContainer.appendChild(div);
-        });
-        projectsSection.style.display = 'block';
-    } else {
-        projectsSection.style.display = 'none';
+    if (projectsContainer && projectsSection) {
+        if (projects.length > 0) {
+            projectsContainer.innerHTML = '';
+            projects.forEach(project => {
+                const div = document.createElement('div');
+                div.className = 'cv-ats-item';
+                
+                let achievementsList = '';
+                if (project.achievements) {
+                    const lines = project.achievements.split('\n').filter(line => line.trim());
+                    if (lines.length > 0) {
+                        achievementsList = '<ul>' + lines.map(line => 
+                            `<li>${line.replace(/^[•\-]\s*/, '').trim()}</li>`
+                        ).join('') + '</ul>';
+                    }
+                }
+                
+                div.innerHTML = `
+                    <div class="cv-ats-item-header">
+                        <span class="cv-ats-item-title">${project.title}</span>
+                        <span class="cv-ats-item-period">${project.period}</span>
+                    </div>
+                    ${project.context ? `<div class="cv-ats-item-subtitle">${project.context}</div>` : ''}
+                    <div class="cv-ats-item-description">
+                        <strong>Technologies:</strong> ${project.technologies}<br>
+                        ${project.description}
+                        ${achievementsList}
+                    </div>
+                `;
+                projectsContainer.appendChild(div);
+            });
+            projectsSection.style.display = 'block';
+        } else {
+            projectsSection.style.display = 'none';
+        }
     }
     
     // Compétences
-    const skills = document.getElementById('cv-skills').value;
-    document.getElementById('preview-cv-skills').textContent = skills;
+    const skillsProgramming = document.getElementById('cv-skills-programming').value;
+    const skillsFrameworks = document.getElementById('cv-skills-frameworks').value;
+    const skillsTools = document.getElementById('cv-skills-tools').value;
+    const skillsMethodologies = document.getElementById('cv-skills-methodologies').value;
+    
+    const skillsContainer = document.getElementById('preview-cv-skills');
+    if (skillsContainer) {
+        skillsContainer.innerHTML = `
+            <div class="cv-ats-skills-grid">
+                ${skillsProgramming ? `<div class="cv-ats-skill-category"><strong>Langages:</strong> <span>${skillsProgramming}</span></div>` : ''}
+                ${skillsFrameworks ? `<div class="cv-ats-skill-category"><strong>Frameworks:</strong> <span>${skillsFrameworks}</span></div>` : ''}
+                ${skillsTools ? `<div class="cv-ats-skill-category"><strong>Outils:</strong> <span>${skillsTools}</span></div>` : ''}
+                ${skillsMethodologies ? `<div class="cv-ats-skill-category"><strong>Méthodologies:</strong> <span>${skillsMethodologies}</span></div>` : ''}
+            </div>
+        `;
+    }
     
     // Langues
     const languages = document.getElementById('cv-languages').value;
-    document.getElementById('preview-cv-languages').textContent = languages;
-}
-
-function getCVExperiences() {
-    const experiences = [];
-    const titles = document.querySelectorAll('.cv-exp-title');
+    const languagesEl = document.getElementById('preview-cv-languages');
+    if (languagesEl) languagesEl.textContent = languages;
     
-    titles.forEach(title => {
-        const expId = title.dataset.expId;
-        const company = document.querySelector(`.cv-exp-company[data-exp-id="${expId}"]`);
-        const period = document.querySelector(`.cv-exp-period[data-exp-id="${expId}"]`);
-        const description = document.querySelector(`.cv-exp-description[data-exp-id="${expId}"]`);
-        
-        if (title.value) {
-            experiences.push({
-                title: title.value,
-                company: company?.value || '',
-                period: period?.value || '',
-                description: description?.value || ''
-            });
+    // Certifications
+    const certifications = document.getElementById('cv-certifications').value;
+    const certificationsEl = document.getElementById('preview-cv-certifications');
+    const certificationsSection = document.getElementById('cv-certifications-section');
+    
+    if (certificationsEl && certificationsSection) {
+        if (certifications && certifications.trim()) {
+            certificationsEl.innerHTML = certifications.split('\n').filter(c => c.trim()).map(cert => 
+                `• ${cert.trim()}`
+            ).join('<br>');
+            certificationsSection.style.display = 'block';
+        } else {
+            certificationsSection.style.display = 'none';
         }
-    });
-    
-    return experiences;
-}
-
-function getCVEducation() {
-    const education = [];
-    const degrees = document.querySelectorAll('.cv-edu-degree');
-    
-    degrees.forEach(degree => {
-        const eduId = degree.dataset.eduId;
-        const school = document.querySelector(`.cv-edu-school[data-edu-id="${eduId}"]`);
-        const period = document.querySelector(`.cv-edu-period[data-edu-id="${eduId}"]`);
-        const description = document.querySelector(`.cv-edu-description[data-edu-id="${eduId}"]`);
-        
-        if (degree.value) {
-            education.push({
-                degree: degree.value,
-                school: school?.value || '',
-                period: period?.value || '',
-                description: description?.value || ''
-            });
-        }
-    });
-    
-    return education;
+    }
 }
 
 // ========================================
-// ÉTAPE 13: GÉNÉRATION PDF CV
+// CV - OPTIONS PHOTO
+// ========================================
+
+function togglePhotoOptions() {
+    const includePhoto = document.getElementById('cv-include-photo').checked;
+    const photoOptions = document.getElementById('photo-options');
+    
+    if (includePhoto) {
+        photoOptions.style.display = 'block';
+    } else {
+        photoOptions.style.display = 'none';
+        const photoContainer = document.getElementById('cv-photo-container');
+        if (photoContainer) {
+            photoContainer.style.display = 'none';
+        }
+    }
+    
+    updateCVPreview();
+}
+
+function selectPhotoPosition(position) {
+    cvPhotoPosition = position;
+    
+    document.querySelectorAll('.position-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    const selectedBtn = document.querySelector(`[data-position="${position}"]`);
+    if (selectedBtn) {
+        selectedBtn.classList.add('active');
+    }
+    
+    updateCVPreview();
+}
+
+// ========================================
+// CV - GÉNÉRATION PDF OPTIMISÉ ATS
 // ========================================
 
 function generateCVPDF() {
-    console.log('Génération du CV PDF...');
+    console.log('Génération du CV PDF optimisé ATS...');
     
     const { jsPDF } = window.jspdf;
     
-    // Récupérer le font sélectionné
     const fontFamily = document.getElementById('cv-font').value;
     const doc = new jsPDF({
         unit: 'mm',
         format: 'a4'
     });
     
-    // Définir la police
     doc.setFont(fontFamily);
     
     // Récupérer les données
@@ -1194,9 +1332,16 @@ function generateCVPDF() {
     const phone = document.getElementById('cv-phone').value;
     const address = document.getElementById('cv-address').value;
     const linkedin = document.getElementById('cv-linkedin').value;
+    const website = document.getElementById('cv-website').value;
     const summary = document.getElementById('cv-summary').value;
-    const skills = document.getElementById('cv-skills').value;
+    
+    const skillsProgramming = document.getElementById('cv-skills-programming').value;
+    const skillsFrameworks = document.getElementById('cv-skills-frameworks').value;
+    const skillsTools = document.getElementById('cv-skills-tools').value;
+    const skillsMethodologies = document.getElementById('cv-skills-methodologies').value;
+    
     const languages = document.getElementById('cv-languages').value;
+    const certifications = document.getElementById('cv-certifications').value;
     
     const color = document.getElementById('cv-color').value;
     const rgb = hexToRgb(color);
@@ -1208,112 +1353,70 @@ function generateCVPDF() {
     const includePhoto = document.getElementById('cv-include-photo').checked;
     
     let yPosition = 20;
+    const pageWidth = 210;
+    const leftMargin = 20;
+    const rightMargin = 20;
+    const contentWidth = pageWidth - leftMargin - rightMargin;
     
-    // HEADER avec couleur personnalisée selon template
-    if (cvTemplate === 'modern') {
-        // Template Moderne - Header avec fond couleur
-        doc.setFillColor(rgb.r, rgb.g, rgb.b);
-        doc.rect(0, 0, 210, 60, 'F');
-        
-        // Photo si présente
-        if (includePhoto && cvPhotoBase64) {
-            let photoX = cvPhotoPosition === 'left' ? 15 : (cvPhotoPosition === 'center' ? 90 : 165);
-            try {
-                doc.addImage(cvPhotoBase64, 'PNG', photoX, 10, 30, 30, undefined, 'FAST', 0);
-            } catch (e) {
-                console.error('Erreur photo:', e);
-            }
+    // HEADER
+    if (includePhoto && cvPhotoBase64) {
+        try {
+            doc.addImage(cvPhotoBase64, 'PNG', 85, yPosition, 25, 25, undefined, 'FAST', 0);
+            yPosition += 30;
+        } catch (e) {
+            console.error('Erreur photo:', e);
         }
-        
-        // Nom et titre en blanc
-        doc.setTextColor(255, 255, 255);
-        doc.setFontSize(26);
-        doc.setFont(fontFamily, 'bold');
-        doc.text(name, 105, 25, { align: 'center' });
-        
-        doc.setFontSize(16);
-        doc.setFont(fontFamily, 'normal');
-        doc.text(title, 105, 33, { align: 'center' });
-        
-        doc.setFontSize(9);
-        doc.text(`${email}  |  ${phone}  |  ${address}`, 105, 45, { align: 'center' });
-        
-        if (linkedin) {
-            doc.text(linkedin, 105, 52, { align: 'center' });
-        }
-        
-        yPosition = 70;
-        doc.setTextColor(0, 0, 0);
-        
-    } else if (cvTemplate === 'classic') {
-        // Template Classique - Header simple noir
-        if (includePhoto && cvPhotoBase64) {
-            try {
-                doc.addImage(cvPhotoBase64, 'PNG', 15, 15, 30, 30, undefined, 'FAST', 0);
-            } catch (e) {
-                console.error('Erreur photo:', e);
-            }
-        }
-        
-        doc.setTextColor(0, 0, 0);
-        doc.setFontSize(28);
-        doc.setFont(fontFamily, 'bold');
-        doc.text(name, includePhoto && cvPhotoBase64 ? 50 : 15, 25);
-        
-        doc.setFontSize(14);
-        doc.setFont(fontFamily, 'normal');
-        doc.text(title, includePhoto && cvPhotoBase64 ? 50 : 15, 33);
-        
-        doc.setFontSize(9);
-        doc.text(`${email}  |  ${phone}  |  ${address}`, includePhoto && cvPhotoBase64 ? 50 : 15, 40);
-        
-        // Ligne noire
-        doc.setDrawColor(0, 0, 0);
-        doc.setLineWidth(1);
-        doc.line(15, 48, 195, 48);
-        
-        yPosition = 55;
-        
-    } else {
-        // Template Créatif - Bande de couleur à gauche
-        doc.setFillColor(rgb.r, rgb.g, rgb.b);
-        doc.rect(0, 0, 5, 297, 'F');
-        
-        if (includePhoto && cvPhotoBase64) {
-            try {
-                doc.addImage(cvPhotoBase64, 'PNG', 15, 15, 30, 30, undefined, 'FAST', 0);
-            } catch (e) {
-                console.error('Erreur photo:', e);
-            }
-        }
-        
-        // Nom avec couleur
-        doc.setTextColor(rgb.r, rgb.g, rgb.b);
-        doc.setFontSize(26);
-        doc.setFont(fontFamily, 'bold');
-        doc.text(name, includePhoto && cvPhotoBase64 ? 50 : 15, 25);
-        
-        doc.setTextColor(0, 0, 0);
-        doc.setFontSize(16);
-        doc.setFont(fontFamily, 'normal');
-        doc.text(title, includePhoto && cvPhotoBase64 ? 50 : 15, 33);
-        
-        doc.setFontSize(9);
-        doc.text(`${email}  |  ${phone}  |  ${address}`, includePhoto && cvPhotoBase64 ? 50 : 15, 40);
-        
-        yPosition = 55;
     }
+    
+    // Nom
+    doc.setTextColor(rgb.r, rgb.g, rgb.b);
+    doc.setFontSize(20);
+    doc.setFont(fontFamily, 'bold');
+    doc.text(name.toUpperCase(), pageWidth / 2, yPosition, { align: 'center' });
+    yPosition += 8;
+    
+    // Titre
+    doc.setTextColor(80, 80, 80);
+    doc.setFontSize(12);
+    doc.setFont(fontFamily, 'normal');
+    doc.text(title, pageWidth / 2, yPosition, { align: 'center' });
+    yPosition += 7;
+    
+    // Contact
+    doc.setFontSize(10);
+    doc.setTextColor(0, 0, 0);
+    let contactLine = `${email} | ${phone} | ${address}`;
+    doc.text(contactLine, pageWidth / 2, yPosition, { align: 'center' });
+    yPosition += 5;
+    
+    // Liens
+    let linksLine = linkedin;
+    if (website) {
+        linksLine += ` | ${website}`;
+    }
+    if (linksLine) {
+        doc.setTextColor(0, 102, 204);
+        doc.text(linksLine, pageWidth / 2, yPosition, { align: 'center' });
+        yPosition += 5;
+    }
+    
+    // Ligne de séparation
+    doc.setDrawColor(rgb.r, rgb.g, rgb.b);
+    doc.setLineWidth(0.5);
+    doc.line(leftMargin, yPosition, pageWidth - rightMargin, yPosition);
+    yPosition += 8;
+    
+    doc.setTextColor(0, 0, 0);
     
     // RÉSUMÉ
     if (summary) {
-        addCVSection(doc, yPosition, 'RÉSUMÉ PROFESSIONNEL', fontFamily, rgb, cvTemplate);
-        yPosition += 10;
+        yPosition = addATSSection(doc, 'RÉSUMÉ PROFESSIONNEL', yPosition, fontFamily, rgb);
         
         doc.setFontSize(10);
         doc.setFont(fontFamily, 'normal');
-        const splitSummary = doc.splitTextToSize(summary, 180);
-        doc.text(splitSummary, 15, yPosition);
-        yPosition += splitSummary.length * 5 + 10;
+        const splitSummary = doc.splitTextToSize(summary, contentWidth);
+        doc.text(splitSummary, leftMargin, yPosition);
+        yPosition += splitSummary.length * 5 + 8;
     }
     
     // EXPÉRIENCE
@@ -1323,8 +1426,7 @@ function generateCVPDF() {
             yPosition = 20;
         }
         
-        addCVSection(doc, yPosition, 'EXPÉRIENCE PROFESSIONNELLE', fontFamily, rgb, cvTemplate);
-        yPosition += 10;
+        yPosition = addATSSection(doc, 'EXPÉRIENCE PROFESSIONNELLE', yPosition, fontFamily, rgb);
         
         experiences.forEach((exp) => {
             if (yPosition > 250) {
@@ -1334,24 +1436,43 @@ function generateCVPDF() {
             
             doc.setFontSize(11);
             doc.setFont(fontFamily, 'bold');
-            doc.text(exp.title, 15, yPosition);
+            doc.text(exp.title, leftMargin, yPosition);
             
-            doc.setFontSize(9);
-            doc.setFont(fontFamily, 'normal');
+            doc.setFont(fontFamily, 'italic');
             doc.setTextColor(100, 100, 100);
-            yPosition += 5;
-            doc.text(`${exp.company} | ${exp.period}`, 15, yPosition);
-            
+            const periodWidth = doc.getTextWidth(exp.period);
+            doc.text(exp.period, pageWidth - rightMargin - periodWidth, yPosition);
             doc.setTextColor(0, 0, 0);
+            
+            yPosition += 6;
+            
+            doc.setFontSize(10);
+            doc.setFont(fontFamily, 'normal');
+            doc.text(exp.company, leftMargin, yPosition);
             yPosition += 6;
             
             if (exp.description) {
-                const splitDesc = doc.splitTextToSize(exp.description, 180);
-                doc.text(splitDesc, 15, yPosition);
-                yPosition += splitDesc.length * 4;
+                doc.setFontSize(10);
+                const lines = exp.description.split('\n').filter(line => line.trim());
+                
+                lines.forEach(line => {
+                    if (yPosition > 270) {
+                        doc.addPage();
+                        yPosition = 20;
+                    }
+                    
+                    const cleanLine = line.replace(/^[•\-]\s*/, '').trim();
+                    
+                    if (cleanLine) {
+                        doc.text('•', leftMargin + 2, yPosition);
+                        const splitLine = doc.splitTextToSize(cleanLine, contentWidth - 8);
+                        doc.text(splitLine, leftMargin + 6, yPosition);
+                        yPosition += splitLine.length * 5;
+                    }
+                });
             }
             
-            yPosition += 8;
+            yPosition += 6;
         });
     }
     
@@ -1362,8 +1483,7 @@ function generateCVPDF() {
             yPosition = 20;
         }
         
-        addCVSection(doc, yPosition, 'FORMATION', fontFamily, rgb, cvTemplate);
-        yPosition += 10;
+        yPosition = addATSSection(doc, 'FORMATION', yPosition, fontFamily, rgb);
         
         education.forEach((edu) => {
             if (yPosition > 250) {
@@ -1373,145 +1493,236 @@ function generateCVPDF() {
             
             doc.setFontSize(11);
             doc.setFont(fontFamily, 'bold');
-            doc.text(edu.degree, 15, yPosition);
+            doc.text(edu.degree, leftMargin, yPosition);
             
-            doc.setFontSize(9);
-            doc.setFont(fontFamily, 'normal');
+            doc.setFont(fontFamily, 'italic');
             doc.setTextColor(100, 100, 100);
-            yPosition += 5;
-            doc.text(`${edu.school} | ${edu.period}`, 15, yPosition);
-            
+            const periodWidth = doc.getTextWidth(edu.period);
+            doc.text(edu.period, pageWidth - rightMargin - periodWidth, yPosition);
             doc.setTextColor(0, 0, 0);
+            
+            yPosition += 6;
+            
+            doc.setFontSize(10);
+            doc.setFont(fontFamily, 'normal');
+            doc.text(edu.school, leftMargin, yPosition);
             yPosition += 6;
             
             if (edu.description) {
-                const splitDesc = doc.splitTextToSize(edu.description, 180);
-                doc.text(splitDesc, 15, yPosition);
-                yPosition += splitDesc.length * 4;
+                const splitDesc = doc.splitTextToSize(edu.description, contentWidth);
+                doc.text(splitDesc, leftMargin, yPosition);
+                yPosition += splitDesc.length * 5;
             }
             
-            yPosition += 8;
+            yPosition += 6;
         });
     }
     
     // PROJETS
     if (projects.length > 0) {
-        if (yPosition > 230) {
+        if (yPosition > 220) {
             doc.addPage();
             yPosition = 20;
         }
         
-        addCVSection(doc, yPosition, 'PROJETS', fontFamily, rgb, cvTemplate);
-        yPosition += 10;
+        yPosition = addATSSection(doc, 'PROJETS CLÉS', yPosition, fontFamily, rgb);
         
         projects.forEach((project) => {
-            if (yPosition > 250) {
+            if (yPosition > 240) {
                 doc.addPage();
                 yPosition = 20;
             }
             
             doc.setFontSize(11);
             doc.setFont(fontFamily, 'bold');
-            doc.text(project.title, 15, yPosition);
+            doc.text(project.title, leftMargin, yPosition);
             
-            doc.setFontSize(9);
-            doc.setFont(fontFamily, 'normal');
-            doc.setTextColor(100, 100, 100);
-            yPosition += 5;
-            doc.text(`${project.period} | ${project.technologies}`, 15, yPosition);
-            
-            doc.setTextColor(0, 0, 0);
-            yPosition += 6;
-            
-            if (project.description) {
-                const splitDesc = doc.splitTextToSize(project.description, 180);
-                doc.text(splitDesc, 15, yPosition);
-                yPosition += splitDesc.length * 4;
+            if (project.period) {
+                doc.setFont(fontFamily, 'italic');
+                doc.setTextColor(100, 100, 100);
+                const periodWidth = doc.getTextWidth(project.period);
+                doc.text(project.period, pageWidth - rightMargin - periodWidth, yPosition);
+                doc.setTextColor(0, 0, 0);
             }
             
-            yPosition += 8;
+            yPosition += 6;
+            
+            if (project.context) {
+                doc.setFontSize(10);
+                doc.setFont(fontFamily, 'normal');
+                doc.text(project.context, leftMargin, yPosition);
+                yPosition += 5;
+            }
+            
+            if (project.technologies) {
+                doc.setFontSize(10);
+                doc.setFont(fontFamily, 'bold');
+                doc.text('Technologies: ', leftMargin, yPosition);
+                doc.setFont(fontFamily, 'normal');
+                const techText = doc.splitTextToSize(project.technologies, contentWidth - 30);
+                doc.text(techText, leftMargin + 30, yPosition);
+                yPosition += techText.length * 5;
+            }
+            
+            if (project.description) {
+                doc.setFontSize(10);
+                doc.setFont(fontFamily, 'normal');
+                const splitDesc = doc.splitTextToSize(project.description, contentWidth);
+                doc.text(splitDesc, leftMargin, yPosition);
+                yPosition += splitDesc.length * 5 + 2;
+            }
+            
+            if (project.achievements) {
+                const lines = project.achievements.split('\n').filter(line => line.trim());
+                
+                lines.forEach(line => {
+                    if (yPosition > 270) {
+                        doc.addPage();
+                        yPosition = 20;
+                    }
+                    
+                    const cleanLine = line.replace(/^[•\-]\s*/, '').trim();
+                    
+                    if (cleanLine) {
+                        doc.text('•', leftMargin + 2, yPosition);
+                        const splitLine = doc.splitTextToSize(cleanLine, contentWidth - 8);
+                        doc.text(splitLine, leftMargin + 6, yPosition);
+                        yPosition += splitLine.length * 5;
+                    }
+                });
+            }
+            
+            yPosition += 6;
         });
     }
     
     // COMPÉTENCES
-    if (skills) {
+    const hasSkills = skillsProgramming || skillsFrameworks || skillsTools || skillsMethodologies;
+    
+    if (hasSkills) {
         if (yPosition > 240) {
             doc.addPage();
             yPosition = 20;
         }
         
-        addCVSection(doc, yPosition, 'COMPÉTENCES', fontFamily, rgb, cvTemplate);
-        yPosition += 10;
+        yPosition = addATSSection(doc, 'COMPÉTENCES TECHNIQUES', yPosition, fontFamily, rgb);
         
         doc.setFontSize(10);
-        doc.setFont(fontFamily, 'normal');
-        const splitSkills = doc.splitTextToSize(skills, 180);
-        doc.text(splitSkills, 15, yPosition);
-        yPosition += splitSkills.length * 5 + 10;
+        
+        if (skillsProgramming) {
+            doc.setFont(fontFamily, 'bold');
+            doc.text('Langages: ', leftMargin, yPosition);
+            doc.setFont(fontFamily, 'normal');
+            const skillsText = doc.splitTextToSize(skillsProgramming, contentWidth - 25);
+            doc.text(skillsText, leftMargin + 25, yPosition);
+            yPosition += skillsText.length * 5 + 2;
+        }
+        
+        if (skillsFrameworks) {
+            if (yPosition > 270) {
+                doc.addPage();
+                yPosition = 20;
+            }
+            doc.setFont(fontFamily, 'bold');
+            doc.text('Frameworks: ', leftMargin, yPosition);
+            doc.setFont(fontFamily, 'normal');
+            const skillsText = doc.splitTextToSize(skillsFrameworks, contentWidth - 30);
+            doc.text(skillsText, leftMargin + 30, yPosition);
+            yPosition += skillsText.length * 5 + 2;
+        }
+        
+        if (skillsTools) {
+            if (yPosition > 270) {
+                doc.addPage();
+                yPosition = 20;
+            }
+            doc.setFont(fontFamily, 'bold');
+            doc.text('Outils: ', leftMargin, yPosition);
+            doc.setFont(fontFamily, 'normal');
+            const skillsText = doc.splitTextToSize(skillsTools, contentWidth - 20);
+            doc.text(skillsText, leftMargin + 20, yPosition);
+            yPosition += skillsText.length * 5 + 2;
+        }
+        
+        if (skillsMethodologies) {
+            if (yPosition > 270) {
+                doc.addPage();
+                yPosition = 20;
+            }
+            doc.setFont(fontFamily, 'bold');
+            doc.text('Méthodologies: ', leftMargin, yPosition);
+            doc.setFont(fontFamily, 'normal');
+            const skillsText = doc.splitTextToSize(skillsMethodologies, contentWidth - 35);
+            doc.text(skillsText, leftMargin + 35, yPosition);
+            yPosition += skillsText.length * 5 + 2;
+        }
+        
+        yPosition += 6;
     }
     
     // LANGUES
-    if (languages) {
-        if (yPosition > 250) {
+    if (languages && languages.trim()) {
+        if (yPosition > 260) {
             doc.addPage();
             yPosition = 20;
         }
         
-        addCVSection(doc, yPosition, 'LANGUES', fontFamily, rgb, cvTemplate);
-        yPosition += 10;
+        yPosition = addATSSection(doc, 'LANGUES', yPosition, fontFamily, rgb);
         
         doc.setFontSize(10);
         doc.setFont(fontFamily, 'normal');
-        const splitLang = doc.splitTextToSize(languages, 180);
-        doc.text(splitLang, 15, yPosition);
+        const splitLang = doc.splitTextToSize(languages, contentWidth);
+        doc.text(splitLang, leftMargin, yPosition);
+        yPosition += splitLang.length * 5 + 8;
     }
     
-    // Télécharger
-    const fileName = `CV-${name.replace(/\s+/g, '-')}.pdf`;
+    // CERTIFICATIONS
+    if (certifications && certifications.trim()) {
+        if (yPosition > 260) {
+            doc.addPage();
+            yPosition = 20;
+        }
+        
+        yPosition = addATSSection(doc, 'CERTIFICATIONS', yPosition, fontFamily, rgb);
+        
+        doc.setFontSize(10);
+        doc.setFont(fontFamily, 'normal');
+        
+        const certLines = certifications.split('\n').filter(line => line.trim());
+        certLines.forEach(cert => {
+            if (yPosition > 280) {
+                doc.addPage();
+                yPosition = 20;
+            }
+            doc.text('•  ' + cert.trim(), leftMargin, yPosition);
+            yPosition += 5;
+        });
+    }
+    
+    const fileName = `CV-${name.replace(/\s+/g, '-')}-ATS.pdf`;
     doc.save(fileName);
     
-    console.log('CV PDF généré !');
-    showNotification('CV PDF généré avec succès !');
+    console.log('CV PDF ATS généré !');
+    showNotification('CV PDF optimisé ATS généré avec succès !');
 }
 
-function addCVSection(doc, y, title, font, rgb, template) {
-    if (template === 'classic') {
-        // Template classique - fond noir
-        doc.setFillColor(0, 0, 0);
-        doc.rect(15, y - 5, 180, 8, 'F');
-        
-        doc.setFontSize(12);
-        doc.setFont(font, 'bold');
-        doc.setTextColor(255, 255, 255);
-        doc.text(title, 17, y);
-        doc.setTextColor(0, 0, 0);
-    } else if (template === 'creative') {
-        // Template créatif - barre de couleur à gauche
-        doc.setFillColor(rgb.r, rgb.g, rgb.b);
-        doc.rect(10, y - 5, 4, 8, 'F');
-        
-        doc.setFontSize(12);
-        doc.setFont(font, 'bold');
-        doc.setTextColor(rgb.r, rgb.g, rgb.b);
-        doc.text(title, 17, y);
-        doc.setTextColor(0, 0, 0);
-    } else {
-        // Template moderne - ligne de couleur
-        doc.setFontSize(12);
-        doc.setFont(font, 'bold');
-        doc.setTextColor(rgb.r, rgb.g, rgb.b);
-        doc.text(title, 15, y);
-        
-        doc.setDrawColor(rgb.r, rgb.g, rgb.b);
-        doc.setLineWidth(0.5);
-        doc.line(15, y + 2, 195, y + 2);
-        
-        doc.setTextColor(0, 0, 0);
-    }
+function addATSSection(doc, title, yPosition, fontFamily, rgb) {
+    doc.setFontSize(12);
+    doc.setFont(fontFamily, 'bold');
+    doc.setTextColor(rgb.r, rgb.g, rgb.b);
+    doc.text(title, 20, yPosition);
+    
+    doc.setDrawColor(200, 200, 200);
+    doc.setLineWidth(0.3);
+    doc.line(20, yPosition + 1, 190, yPosition + 1);
+    
+    doc.setTextColor(0, 0, 0);
+    
+    return yPosition + 8;
 }
 
 // ========================================
-// ÉTAPE 14: FULLSCREEN PREVIEW
+// FULLSCREEN PREVIEW
 // ========================================
 
 function openFullscreenPreview(type) {
@@ -1522,11 +1733,15 @@ function openFullscreenPreview(type) {
     if (type === 'invoice') {
         title.textContent = 'Prévisualisation - Facture';
         const previewContent = document.querySelector('#invoice-preview .preview-content');
-        content.innerHTML = previewContent.outerHTML;
+        if (previewContent) {
+            content.innerHTML = previewContent.outerHTML;
+        }
     } else {
         title.textContent = 'Prévisualisation - CV';
-        const previewContent = document.querySelector('#cv-preview .cv-preview-content');
-        content.innerHTML = previewContent.outerHTML;
+        const previewContent = document.querySelector('#cv-preview .cv-preview-content-ats');
+        if (previewContent) {
+            content.innerHTML = previewContent.outerHTML;
+        }
     }
     
     modal.classList.add('active');
@@ -1539,7 +1754,6 @@ function closeFullscreenPreview() {
     document.body.style.overflow = 'auto';
 }
 
-// Fermer avec Escape
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
         closeFullscreenPreview();
@@ -1547,7 +1761,7 @@ document.addEventListener('keydown', (e) => {
 });
 
 // ========================================
-// ÉTAPE 15: UTILITAIRES
+// UTILITAIRES
 // ========================================
 
 function hexToRgb(hex) {
@@ -1584,7 +1798,6 @@ function showNotification(message) {
     }, 3000);
 }
 
-// Animations
 const style = document.createElement('style');
 style.textContent = `
     @keyframes slideIn {

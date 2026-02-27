@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Générateur de PDF Professionnel</title>
     <link rel="stylesheet" href="/Generateur/style.css">
 </head>
+
 <body>
     <div class="container">
         <!-- Header -->
@@ -28,11 +30,11 @@
                     <!-- Formulaire -->
                     <div class="form-section">
                         <h2>Informations de la facture</h2>
-                        
+
                         <!-- Personnalisation -->
                         <div class="form-card">
                             <h3>Personnalisation</h3>
-                            
+
                             <div class="form-group">
                                 <label>Logo de l'entreprise</label>
                                 <div class="logo-upload">
@@ -40,23 +42,26 @@
                                     <label for="company-logo" class="file-label">
                                         <span id="logo-filename">Choisir un logo (PNG, JPG)</span>
                                     </label>
-                                    <button class="btn-small btn-secondary" onclick="removeLogo()" id="remove-logo-btn" style="display: none;">
+                                    <button class="btn-small btn-secondary" onclick="removeLogo()" id="remove-logo-btn"
+                                        style="display: none;">
                                         Retirer
                                     </button>
                                 </div>
                                 <div id="logo-preview" class="logo-preview"></div>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label>Couleur principale</label>
                                 <div class="color-picker-group">
                                     <input type="color" id="invoice-color" value="#6366f1" class="color-input">
-                                    <input type="text" id="invoice-color-text" value="#6366f1" class="form-input color-text">
+                                    <input type="text" id="invoice-color-text" value="#6366f1"
+                                        class="form-input color-text">
                                 </div>
-                                <div class="help-text">Cette couleur s'appliquera au nom de l'entreprise, aux en-têtes et au total TTC</div>
+                                <div class="help-text">Cette couleur s'appliquera au nom de l'entreprise, aux en-têtes
+                                    et au total TTC</div>
                             </div>
                         </div>
-                        
+
                         <div class="form-card">
                             <h3>Votre entreprise</h3>
                             <div class="form-group">
@@ -80,7 +85,8 @@
                             <div class="form-row">
                                 <div class="form-group">
                                     <label>Email</label>
-                                    <input type="email" id="company-email" value="contact@monentreprise.fr" class="form-input">
+                                    <input type="email" id="company-email" value="contact@monentreprise.fr"
+                                        class="form-input">
                                 </div>
                                 <div class="form-group">
                                     <label>Téléphone</label>
@@ -101,7 +107,8 @@
                             </div>
                             <div class="form-group">
                                 <label>Adresse</label>
-                                <input type="text" id="client-address" value="456 Avenue des Affaires" class="form-input">
+                                <input type="text" id="client-address" value="456 Avenue des Affaires"
+                                    class="form-input">
                             </div>
                             <div class="form-row">
                                 <div class="form-group">
@@ -119,7 +126,8 @@
                             <h3>Détails de la facture</h3>
                             <div class="form-group">
                                 <label>Objet de la facture</label>
-                                <input type="text" id="invoice-subject" value="Prestations de développement web" class="form-input" placeholder="Ex: Prestations de conseil">
+                                <input type="text" id="invoice-subject" value="Prestations de développement web"
+                                    class="form-input" placeholder="Ex: Prestations de conseil">
                             </div>
                             <div class="form-row">
                                 <div class="form-group">
@@ -133,7 +141,8 @@
                             </div>
                             <div class="form-group">
                                 <label>Notes / Conditions</label>
-                                <textarea id="invoice-notes" class="form-input" rows="3">Paiement à 30 jours. Merci pour votre confiance.</textarea>
+                                <textarea id="invoice-notes" class="form-input"
+                                    rows="3">Paiement à 30 jours. Merci pour votre confiance.</textarea>
                             </div>
                         </div>
 
@@ -149,7 +158,8 @@
                             <h3>Signature</h3>
                             <div class="form-group">
                                 <label>Lieu</label>
-                                <input type="text" id="invoice-location" value="Paris" class="form-input" placeholder="Paris">
+                                <input type="text" id="invoice-location" value="Paris" class="form-input"
+                                    placeholder="Paris">
                             </div>
                             <div class="form-group">
                                 <label class="checkbox-label">
@@ -165,7 +175,8 @@
                                         <label for="signature-file" class="file-label">
                                             <span id="signature-filename">Choisir une signature</span>
                                         </label>
-                                        <button class="btn-small btn-secondary" onclick="removeSignature()" id="remove-signature-btn" style="display: none;">
+                                        <button class="btn-small btn-secondary" onclick="removeSignature()"
+                                            id="remove-signature-btn" style="display: none;">
                                             Retirer
                                         </button>
                                     </div>
@@ -184,8 +195,10 @@
                         <div class="preview-header-bar">
                             <h2>Prévisualisation</h2>
                             <button class="btn-icon" onclick="openFullscreenPreview('invoice')" title="Agrandir">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path
+                                        d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" />
                                 </svg>
                             </button>
                         </div>
@@ -195,7 +208,8 @@
                                     <div class="preview-logo-section">
                                         <div id="preview-logo" class="preview-logo"></div>
                                         <div>
-                                            <h1 id="preview-company-name" style="color: #6366f1;">MonEntreprise SARL</h1>
+                                            <h1 id="preview-company-name" style="color: #6366f1;">MonEntreprise SARL
+                                            </h1>
                                             <p id="preview-company-address">123 Rue du Commerce<br>75001 Paris</p>
                                         </div>
                                     </div>
@@ -204,7 +218,7 @@
                                         <p id="preview-invoice-number">N° 2024-001</p>
                                     </div>
                                 </div>
-                                
+
                                 <!-- Objet et Client sur même ligne -->
                                 <div class="preview-subject-client-row">
                                     <div class="preview-subject-box">
@@ -213,10 +227,11 @@
                                     </div>
                                     <div class="preview-client-box">
                                         <p><strong>Client:</strong></p>
-                                        <p id="preview-client-info">Société Client SA<br>456 Avenue des Affaires<br>69001 Lyon</p>
+                                        <p id="preview-client-info">Société Client SA<br>456 Avenue des
+                                            Affaires<br>69001 Lyon</p>
                                     </div>
                                 </div>
-                                
+
                                 <table class="preview-table">
                                     <thead id="invoice-table-head">
                                         <tr>
@@ -229,13 +244,14 @@
                                     </thead>
                                     <tbody id="preview-items"></tbody>
                                 </table>
-                                
+
                                 <div class="preview-total">
                                     <p>Total HT: <span id="preview-total-ht">0.00€</span></p>
                                     <p>TVA (20%): <span id="preview-tva">0.00€</span></p>
-                                    <p class="preview-total-ttc"><strong>Total TTC: <span id="preview-total-ttc" style="color: #6366f1;">0.00€</span></strong></p>
+                                    <p class="preview-total-ttc"><strong>Total TTC: <span id="preview-total-ttc"
+                                                style="color: #6366f1;">0.00€</span></strong></p>
                                 </div>
-                                
+
                                 <!-- Signature -->
                                 <div class="preview-signature" id="preview-signature-section" style="display: none;">
                                     <p id="preview-signature-location">A Paris, le 19/02/2026</p>
@@ -248,64 +264,51 @@
             </div>
 
             <!-- CV Tab -->
+            <!-- CV Tab -->
             <div id="cv-tab" class="tab-panel">
                 <div class="grid-2">
                     <!-- Formulaire CV -->
                     <div class="form-section">
                         <h2>Informations du CV</h2>
-                        
+
                         <!-- Style du CV -->
                         <div class="form-card">
                             <h3>Style du CV</h3>
-                            
-                            <div class="form-group">
-                                <label>Template</label>
-                                <div class="template-grid">
-                                    <div class="template-option active" data-template="modern" onclick="selectCVTemplate('modern')">
-                                        <div class="template-preview template-modern"></div>
-                                        <span>Moderne</span>
-                                    </div>
-                                    <div class="template-option" data-template="classic" onclick="selectCVTemplate('classic')">
-                                        <div class="template-preview template-classic"></div>
-                                        <span>Classique</span>
-                                    </div>
-                                    <div class="template-option" data-template="creative" onclick="selectCVTemplate('creative')">
-                                        <div class="template-preview template-creative"></div>
-                                        <span>Créatif</span>
-                                    </div>
-                                </div>
-                            </div>
-                            
+
                             <div class="form-group">
                                 <label>Couleur principale</label>
                                 <div class="color-picker-group">
-                                    <input type="color" id="cv-color" value="#6366f1" class="color-input">
-                                    <input type="text" id="cv-color-text" value="#6366f1" class="form-input color-text">
+                                    <input type="color" id="cv-color" value="#2c3e50" class="color-input">
+                                    <input type="text" id="cv-color-text" value="#2c3e50" class="form-input color-text">
                                 </div>
                                 <div class="help-text">Cette couleur s'appliquera au nom et aux titres de sections</div>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label>Police</label>
                                 <select id="cv-font" class="form-input">
-                                    <option value="helvetica">Helvetica (par défaut)</option>
+                                    <option value="helvetica">Helvetica (Recommandé pour ATS)</option>
                                     <option value="times">Times New Roman</option>
                                     <option value="courier">Courier</option>
                                 </select>
+                                <div class="help-text">Format optimisé pour les systèmes de suivi des candidatures (ATS)
+                                </div>
                             </div>
                         </div>
-                        
+
                         <!-- Photo -->
                         <div class="form-card">
                             <h3>Photo (optionnel)</h3>
-                            
+
                             <div class="form-group">
                                 <label class="checkbox-label">
                                     <input type="checkbox" id="cv-include-photo" onchange="togglePhotoOptions()">
                                     <span>Inclure une photo</span>
                                 </label>
+                                <div class="help-text">Note: Les photos ne sont pas recommandées pour les systèmes ATS
+                                </div>
                             </div>
-                            
+
                             <div id="photo-options" style="display: none;">
                                 <div class="form-group">
                                     <label>Photo</label>
@@ -314,30 +317,34 @@
                                         <label for="cv-photo" class="file-label">
                                             <span id="photo-filename">Choisir une photo</span>
                                         </label>
-                                        <button class="btn-small btn-secondary" onclick="removePhoto()" id="remove-photo-btn" style="display: none;">
+                                        <button class="btn-small btn-secondary" onclick="removePhoto()"
+                                            id="remove-photo-btn" style="display: none;">
                                             Retirer
                                         </button>
                                     </div>
                                     <div id="photo-preview" class="photo-preview"></div>
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <label>Position de la photo</label>
                                     <div class="position-grid">
-                                        <button type="button" class="position-btn active" data-position="left" onclick="selectPhotoPosition('left')">
+                                        <button type="button" class="position-btn active" data-position="left"
+                                            onclick="selectPhotoPosition('left')">
                                             Gauche
                                         </button>
-                                        <button type="button" class="position-btn" data-position="center" onclick="selectPhotoPosition('center')">
+                                        <button type="button" class="position-btn" data-position="center"
+                                            onclick="selectPhotoPosition('center')">
                                             Centre
                                         </button>
-                                        <button type="button" class="position-btn" data-position="right" onclick="selectPhotoPosition('right')">
+                                        <button type="button" class="position-btn" data-position="right"
+                                            onclick="selectPhotoPosition('right')">
                                             Droite
                                         </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="form-card">
                             <h3>Informations personnelles</h3>
                             <div class="form-group">
@@ -345,8 +352,11 @@
                                 <input type="text" id="cv-name" value="Jean Dupont" class="form-input">
                             </div>
                             <div class="form-group">
-                                <label>Titre / Poste</label>
-                                <input type="text" id="cv-title" value="Développeur Full Stack" class="form-input">
+                                <label>Titre professionnel</label>
+                                <input type="text" id="cv-title" value="Développeur Full Stack Senior"
+                                    class="form-input">
+                                <div class="help-text">Utilisez un titre clair et des mots-clés pertinents pour votre
+                                    domaine</div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group">
@@ -359,24 +369,37 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label>Adresse</label>
+                                <label>Ville, Pays</label>
                                 <input type="text" id="cv-address" value="Paris, France" class="form-input">
                             </div>
                             <div class="form-group">
                                 <label>LinkedIn</label>
-                                <input type="text" id="cv-linkedin" value="linkedin.com/in/jeandupont" class="form-input">
+                                <input type="text" id="cv-linkedin" value="linkedin.com/in/jeandupont"
+                                    class="form-input">
+                            </div>
+                            <div class="form-group">
+                                <label>Site web / Portfolio (optionnel)</label>
+                                <input type="text" id="cv-website" value="" class="form-input"
+                                    placeholder="www.monportfolio.com">
                             </div>
                         </div>
 
                         <div class="form-card">
                             <h3>Résumé professionnel</h3>
                             <div class="form-group">
-                                <textarea id="cv-summary" class="form-input" rows="4">Développeur passionné avec 5 ans d'expérience en développement web full-stack. Expertise en JavaScript, React, Node.js et bases de données. Capacité à travailler en équipe et à livrer des projets de qualité dans les délais.</textarea>
+                                <label>Résumé (3-5 lignes)</label>
+                                <textarea id="cv-summary" class="form-input"
+                                    rows="5">Développeur Full Stack avec 5+ ans d'expérience dans la conception et le développement d'applications web scalables. Expert en JavaScript, React, Node.js et architectures cloud. Historique prouvé de livraison de projets complexes dans des environnements Agile. Passionné par les technologies émergentes et l'optimisation des performances.</textarea>
+                                <div class="help-text">Incluez vos années d'expérience, compétences clés et domaines
+                                    d'expertise</div>
                             </div>
                         </div>
 
                         <div class="form-card">
                             <h3>Expérience professionnelle</h3>
+                            <div class="help-text" style="margin-bottom: 15px;">Listez vos expériences de la plus
+                                récente à la plus ancienne. Utilisez des verbes d'action et quantifiez vos résultats.
+                            </div>
                             <div id="cv-experiences"></div>
                             <button class="btn btn-secondary" onclick="addExperience()">
                                 Ajouter une expérience
@@ -392,7 +415,9 @@
                         </div>
 
                         <div class="form-card">
-                            <h3>Projets personnels / école</h3>
+                            <h3>Projets clés</h3>
+                            <div class="help-text" style="margin-bottom: 15px;">Présentez vos projets les plus
+                                significatifs avec les technologies utilisées et les résultats obtenus.</div>
                             <div id="cv-projects"></div>
                             <button class="btn btn-secondary" onclick="addProject()">
                                 Ajouter un projet
@@ -400,22 +425,50 @@
                         </div>
 
                         <div class="form-card">
-                            <h3>Compétences</h3>
+                            <h3>Compétences techniques</h3>
                             <div class="form-group">
-                                <label>Séparez les compétences par des virgules</label>
-                                <textarea id="cv-skills" class="form-input" rows="3">JavaScript, React, Node.js, Python, SQL, MongoDB, Git, Docker, Agile, UI/UX</textarea>
+                                <label>Langages de programmation</label>
+                                <textarea id="cv-skills-programming" class="form-input"
+                                    rows="2">JavaScript, Python, Java, TypeScript, SQL</textarea>
+                                <div class="help-text">Séparez par des virgules</div>
+                            </div>
+                            <div class="form-group">
+                                <label>Frameworks & Bibliothèques</label>
+                                <textarea id="cv-skills-frameworks" class="form-input"
+                                    rows="2">React, Node.js, Express, Django, Spring Boot, Next.js</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Outils & Technologies</label>
+                                <textarea id="cv-skills-tools" class="form-input"
+                                    rows="2">Git, Docker, Kubernetes, AWS, MongoDB, PostgreSQL, Redis</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Méthodologies</label>
+                                <textarea id="cv-skills-methodologies" class="form-input"
+                                    rows="2">Agile, Scrum, CI/CD, TDD, Microservices</textarea>
                             </div>
                         </div>
 
                         <div class="form-card">
                             <h3>Langues</h3>
                             <div class="form-group">
-                                <textarea id="cv-languages" class="form-input" rows="2">Français (Natif), Anglais (Courant), Espagnol (Intermédiaire)</textarea>
+                                <textarea id="cv-languages" class="form-input"
+                                    rows="2">Français (Natif), Anglais (Courant - C1), Espagnol (Intermédiaire - B1)</textarea>
+                                <div class="help-text">Précisez le niveau (Natif, Courant, Intermédiaire, Notions)</div>
+                            </div>
+                        </div>
+
+                        <div class="form-card">
+                            <h3>Certifications (optionnel)</h3>
+                            <div class="form-group">
+                                <textarea id="cv-certifications" class="form-input" rows="3"
+                                    placeholder="AWS Certified Solutions Architect (2023)&#10;Certified Scrum Master (2022)"></textarea>
+                                <div class="help-text">Une certification par ligne</div>
                             </div>
                         </div>
 
                         <button class="btn btn-primary btn-large" onclick="generateCVPDF()">
-                            Générer le CV PDF
+                            Générer le CV PDF (Format ATS)
                         </button>
                     </div>
 
@@ -424,44 +477,73 @@
                         <div class="preview-header-bar">
                             <h2>Prévisualisation</h2>
                             <button class="btn-icon" onclick="openFullscreenPreview('cv')" title="Agrandir">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path
+                                        d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" />
                                 </svg>
                             </button>
                         </div>
                         <div class="preview-box" id="cv-preview">
-                            <div class="cv-preview-content" id="cv-preview-content" data-template="modern">
-                                <div class="cv-header" id="cv-preview-header">
-                                    <div id="cv-photo-container" class="cv-photo-container" style="display: none;"></div>
-                                    <div class="cv-header-text">
-                                        <h1 id="preview-cv-name" style="color: #6366f1;">Jean Dupont</h1>
-                                        <h3 id="preview-cv-title">Développeur Full Stack</h3>
-                                        <p id="preview-cv-contact">jean.dupont@email.fr | 06 12 34 56 78 | Paris, France</p>
+                            <div class="cv-preview-content-ats" id="cv-preview-content">
+                                <!-- Header -->
+                                <div class="cv-ats-header">
+                                    <div id="cv-photo-container" class="cv-photo-container-ats" style="display: none;">
+                                    </div>
+                                    <h1 id="preview-cv-name" style="color: #2c3e50;">Jean Dupont</h1>
+                                    <h2 id="preview-cv-title">Développeur Full Stack Senior</h2>
+                                    <div class="cv-ats-contact">
+                                        <span id="preview-cv-email">jean.dupont@email.fr</span> |
+                                        <span id="preview-cv-phone">06 12 34 56 78</span> |
+                                        <span id="preview-cv-address">Paris, France</span>
+                                    </div>
+                                    <div class="cv-ats-links">
+                                        <span id="preview-cv-linkedin">linkedin.com/in/jeandupont</span>
+                                        <span id="preview-cv-website" style="display: none;"></span>
                                     </div>
                                 </div>
-                                <div class="cv-section">
-                                    <h4>RÉSUMÉ</h4>
-                                    <p id="preview-cv-summary">Développeur passionné avec 5 ans d'expérience...</p>
+
+                                <!-- Résumé -->
+                                <div class="cv-ats-section">
+                                    <h3 class="cv-ats-section-title">RÉSUMÉ PROFESSIONNEL</h3>
+                                    <p id="preview-cv-summary">Développeur Full Stack avec 5+ ans d'expérience...</p>
                                 </div>
-                                <div class="cv-section">
-                                    <h4>EXPÉRIENCE</h4>
+
+                                <!-- Expérience -->
+                                <div class="cv-ats-section">
+                                    <h3 class="cv-ats-section-title">EXPÉRIENCE PROFESSIONNELLE</h3>
                                     <div id="preview-cv-experiences"></div>
                                 </div>
-                                <div class="cv-section">
-                                    <h4>FORMATION</h4>
+
+                                <!-- Formation -->
+                                <div class="cv-ats-section">
+                                    <h3 class="cv-ats-section-title">FORMATION</h3>
                                     <div id="preview-cv-education"></div>
                                 </div>
-                                <div class="cv-section" id="cv-projects-section" style="display: none;">
-                                    <h4>PROJETS</h4>
+
+                                <!-- Projets -->
+                                <div class="cv-ats-section" id="cv-projects-section" style="display: none;">
+                                    <h3 class="cv-ats-section-title">PROJETS CLÉS</h3>
                                     <div id="preview-cv-projects"></div>
                                 </div>
-                                <div class="cv-section">
-                                    <h4>COMPÉTENCES</h4>
-                                    <p id="preview-cv-skills">JavaScript, React, Node.js...</p>
+
+                                <!-- Compétences -->
+                                <div class="cv-ats-section">
+                                    <h3 class="cv-ats-section-title">COMPÉTENCES TECHNIQUES</h3>
+                                    <div id="preview-cv-skills"></div>
                                 </div>
-                                <div class="cv-section">
-                                    <h4>LANGUES</h4>
-                                    <p id="preview-cv-languages">Français, Anglais, Espagnol</p>
+
+                                <!-- Langues -->
+                                <div class="cv-ats-section">
+                                    <h3 class="cv-ats-section-title">LANGUES</h3>
+                                    <p id="preview-cv-languages">Français (Natif), Anglais (Courant), Espagnol
+                                        (Intermédiaire)</p>
+                                </div>
+
+                                <!-- Certifications -->
+                                <div class="cv-ats-section" id="cv-certifications-section" style="display: none;">
+                                    <h3 class="cv-ats-section-title">CERTIFICATIONS</h3>
+                                    <p id="preview-cv-certifications"></p>
                                 </div>
                             </div>
                         </div>
@@ -485,4 +567,5 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
     <script src="/Generateur/script.js"></script>
 </body>
+
 </html>

@@ -606,173 +606,166 @@ select.form-input {
     max-height: 80px;
 }
 
-/* ===== CV PREVIEW ===== */
-.cv-preview-content {
-    font-size: 13px;
-    line-height: 1.6;
+/* ===== CV ATS OPTIMISÉ ===== */
+.cv-preview-content-ats {
+    font-size: 11pt;
+    line-height: 1.5;
+    color: #000000;
+    font-family: 'Helvetica', Arial, sans-serif;
 }
 
-.cv-header {
+.cv-ats-header {
     text-align: center;
-    margin-bottom: 25px;
-    padding-bottom: 20px;
-    border-bottom: 3px solid var(--primary-color);
-    transition: all 0.3s;
-    position: relative;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #2c3e50;
+    transition: border-color 0.3s;
 }
 
-.cv-photo-container {
-    display: none;
-    margin-bottom: 15px;
-}
-
-.cv-photo-container.cv-photo-left {
-    float: left;
-    margin-right: 20px;
-}
-
-.cv-photo-container.cv-photo-center {
-    display: flex;
-    justify-content: center;
-}
-
-.cv-photo-container.cv-photo-right {
-    float: right;
-    margin-left: 20px;
-}
-
-.cv-photo {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid var(--primary-color);
-}
-
-.cv-header h1 {
-    font-size: 28px;
-    color: var(--primary-color);
+.cv-ats-header h1 {
+    font-size: 24pt;
+    font-weight: bold;
     margin-bottom: 5px;
+    color: #2c3e50;
+    text-transform: uppercase;
+    letter-spacing: 1px;
     transition: color 0.3s;
 }
 
-.cv-header h3 {
-    font-size: 18px;
-    color: var(--text-light);
+.cv-ats-header h2 {
+    font-size: 14pt;
+    font-weight: normal;
+    color: #555555;
     margin-bottom: 10px;
 }
 
-.cv-section {
-    margin-bottom: 25px;
-}
-
-.cv-section h4 {
-    font-size: 16px;
-    color: var(--primary-color);
-    margin-bottom: 10px;
-    padding-bottom: 5px;
-    border-bottom: 2px solid var(--border-color);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    transition: color 0.3s, border-color 0.3s;
-}
-
-.cv-experience-item,
-.cv-education-item,
-.cv-project-item {
-    margin-bottom: 15px;
-}
-
-.cv-experience-item h5,
-.cv-education-item h5,
-.cv-project-item h5 {
-    font-size: 15px;
-    color: var(--text-dark);
-    margin-bottom: 3px;
-}
-
-.cv-meta {
-    color: var(--text-light);
-    font-size: 12px;
+.cv-ats-contact {
+    font-size: 10pt;
+    color: #333333;
     margin-bottom: 5px;
 }
 
-/* ===== CV TEMPLATES - LAYOUTS DIFFÉRENTS ===== */
-.cv-preview-content[data-template="modern"] .cv-header {
+.cv-ats-links {
+    font-size: 10pt;
+    color: #0066cc;
+}
+
+.cv-photo-container-ats {
+    display: none;
+    margin-bottom: 15px;
     text-align: center;
-    background: linear-gradient(135deg, var(--primary-color), #764ba2);
-    padding: 30px;
-    margin: -40px -40px 25px -40px;
-    border-radius: 15px 15px 0 0;
-    border-bottom: none;
 }
 
-.cv-preview-content[data-template="modern"] .cv-header h1,
-.cv-preview-content[data-template="modern"] .cv-header h3,
-.cv-preview-content[data-template="modern"] .cv-header p {
-    color: white !important;
+.cv-photo-container-ats img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #2c3e50;
+    transition: border-color 0.3s;
 }
 
-.cv-preview-content[data-template="modern"] .cv-section {
-    background: var(--bg-light);
-    padding: 15px;
-    border-radius: 8px;
+.cv-ats-section {
     margin-bottom: 20px;
 }
 
-.cv-preview-content[data-template="classic"] .cv-header {
-    text-align: left;
-    border-bottom: 3px solid var(--text-dark);
-    padding-bottom: 15px;
-}
-
-.cv-preview-content[data-template="classic"] .cv-header h1 {
-    font-size: 32px;
+.cv-ats-section-title {
+    font-size: 13pt;
+    font-weight: bold;
+    color: #2c3e50;
     text-transform: uppercase;
-    letter-spacing: 2px;
-    color: var(--text-dark) !important;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #cccccc;
+    letter-spacing: 0.5px;
+    transition: color 0.3s;
 }
 
-.cv-preview-content[data-template="classic"] .cv-section h4 {
-    background: var(--text-dark);
-    color: white;
-    padding: 8px 15px;
-    margin-left: -15px;
-    margin-right: -15px;
-    border-bottom: none;
+.cv-ats-item {
+    margin-bottom: 15px;
+    page-break-inside: avoid;
 }
 
-.cv-preview-content[data-template="creative"] {
-    position: relative;
+.cv-ats-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 3px;
+    flex-wrap: wrap;
 }
 
-.cv-preview-content[data-template="creative"]::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 5px;
-    background: linear-gradient(to bottom, var(--primary-color), #764ba2);
+.cv-ats-item-title {
+    font-size: 12pt;
+    font-weight: bold;
+    color: #000000;
 }
 
-.cv-preview-content[data-template="creative"] .cv-header {
-    text-align: left;
-    background: linear-gradient(90deg, var(--primary-color) 0%, transparent 100%);
-    padding: 20px;
-    margin: -40px -40px 25px -40px;
-    border-bottom: none;
+.cv-ats-item-period {
+    font-size: 10pt;
+    color: #666666;
+    font-style: italic;
 }
 
-.cv-preview-content[data-template="creative"] .cv-section h4 {
-    border-left: 4px solid var(--primary-color);
-    padding-left: 10px;
-    border-bottom: none;
+.cv-ats-item-subtitle {
+    font-size: 11pt;
+    color: #333333;
+    margin-bottom: 5px;
 }
 
-.cv-preview-content[data-template="creative"] .cv-header h1 {
-    color: white !important;
+.cv-ats-item-description {
+    font-size: 10pt;
+    color: #000000;
+    line-height: 1.6;
+    margin-left: 0;
 }
+
+.cv-ats-item-description ul {
+    margin: 5px 0;
+    padding-left: 20px;
+    list-style-type: disc;
+}
+
+.cv-ats-item-description li {
+    margin-bottom: 3px;
+}
+
+.cv-ats-item-description strong {
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.cv-ats-skills-grid {
+    display: grid;
+    gap: 8px;
+}
+
+.cv-ats-skill-category {
+    margin-bottom: 8px;
+}
+
+.cv-ats-skill-category strong {
+    font-size: 10pt;
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+.cv-ats-skill-category span {
+    font-size: 10pt;
+    color: #000000;
+}
+
+/* Responsive CV */
+@media (max-width: 768px) {
+    .cv-ats-item-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .cv-ats-item-period {
+        margin-top: 3px;
+    }
+}
+
 
 /* ===== FULLSCREEN MODAL ===== */
 .fullscreen-modal {
